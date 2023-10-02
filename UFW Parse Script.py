@@ -20,7 +20,6 @@ def parse_log_entry(entry):
             result = f"[ {timestamp} ] [ BLOCK ] [ src: {src_ip} --> {dst_ip}:{port} {proto} ]"
         return result
     return None
-
 # Function to continuously monitor and parse the UFW log
 def monitor_ufw_log(interval_seconds):
     try:
