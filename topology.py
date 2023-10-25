@@ -1,7 +1,7 @@
 import requests
 
 # Configuration
-GATEWAY_URL = "http://your_gateway_ip_address:port"  # replace with your gateway's IP and port
+GATEWAY_URL = "192.168.50.1"  # replace with your gateway's IP and port
 LIST_DEVICES_ENDPOINT = "/list_devices"  # replace with the appropriate endpoint
 
 def list_connected_devices():
