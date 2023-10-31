@@ -1,24 +1,22 @@
-# Import CustomTkinter library
-import customtkinter as ctk
+# Import tkinter and ttk modules
+import tkinter as tk
+import tkinter.ttk as ttk
 
-# Set the default appearance mode to dark
-ctk.set_appearance_mode("dark")
+# Create the main window
+window = tk.Tk()
+window.title("Dark Green GUI")
+window.geometry("300x200")
 
-# Set the default color theme to green
-ctk.set_default_color_theme("green")
+# Set the background color to dark green
+window.config(bg="#006400")
 
-# Create the root window using CustomTkinter
-root = ctk.CTk()
+# Create a black button
+button = ttk.Button(window, text="Click Me", style="Black.TButton")
+button.pack(padx=10, pady=10)
 
-# Create a label widget using CustomTkinter
-label = ctk.CLabel(root, text="Hello, world!", font=("Arial", 20))
-
-# Create a button widget using CustomTkinter
-button = ctk.CButton(root, text="Click me!", command=lambda: print("You clicked the button!"))
-
-# Place the widgets using grid method
-label.grid(row=0, column=0, padx=10, pady=10)
-button.grid(row=1, column=0, padx=10, pady=10)
+# Create a custom style for the button
+style = ttk.Style()
+style.configure("Black.TButton", foreground="black", background="black")
 
 # Start the main loop
-root.mainloop()
+window.mainloop()
