@@ -32,9 +32,9 @@ cat <<EOF
 #                                                               #
 #  Welcome to the Secure Home Hub by HADAWK Digital Solutions!  #
 #                                                               #
-#  Your default hotspot information for connecting to this      #
-#  Secure Home Hub is below. If these seetings do not work      #
-#  try resetting your hotspot by running hotspot_setup.sh       #
+#  Below is your default hotspot info for connecting to this    #
+#  Secure Home Hub. If these settings do not work, try running  #
+#  hotspot_setup.sh to restore your hotspot to default.         #
 #                                                               #
 #################################################################
 
