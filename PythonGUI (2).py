@@ -154,10 +154,11 @@ class App:
          # Create a button that calls the shutdown_device method
         button = tk.Button(sub_frame, text="Power off", command=self.shutdown_device)
         button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text=f"Lock")
-        button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text=f"Restart")
+        # Create a button to lock the device
+        button = tk.Button(sub_frame, text="Lock", command=self.lock_device)
         button.grid(row=0, column=3, padx=10)
+        button = tk.Button(sub_frame, text="Restart", command=self.restart_device)
+        button.grid(row=0, column=2, padx=10)
         return frame
 
     def show_page(self, index):
@@ -173,6 +174,24 @@ class App:
         try:
             # Use the 'poweroff' command to shut down the device
             subprocess.run(['sudo', 'poweroff'])
+        except Exception as e:
+            # Handle any errors or exceptions here
+            print(f"Error: {e}")
+
+    # Define a method to restart the Ubuntu device
+    def restart_device(self):
+        try:
+            # Use the 'reboot' command to restart the device
+            subprocess.run(['sudo', 'reboot'])
+        except Exception as e:
+            # Handle any errors or exceptions here
+            print(f"Error: {e}")
+
+        # Define a method to lock the Ubuntu device
+    def lock_device(self):
+        try:
+            # Use the 'gnome-screensaver-command' to lock the screen
+            subprocess.run(['gnome-screensaver-command', '-l'])
         except Exception as e:
             # Handle any errors or exceptions here
             print(f"Error: {e}")
