@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import os
 import subprocess
+from subprocess import call
 
 class App:
     def __init__(self, root):
@@ -76,13 +77,13 @@ class App:
             listbox.insert(tk.END, item)
             
             
-        button = tk.Button(sub_frame, text=f"Alert Times")
+        button = tk.Button(sub_frame, text=f"Alert Times", command=lambda: call(['python', '-i', 'test.py']))
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text=f"Alert Triggers")
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Alert Priority")
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Intrusion Detection", command=lambda: os.system("intrusion_detect_v2.py"))
+        button = tk.Button(sub_frame, text=f"Intrusion Detection", command=lambda: call(['python', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=4, padx=10)
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=8)
@@ -150,13 +151,13 @@ class App:
         label.pack(pady=20)
         sub_frame = ttk.Frame(frame)
         sub_frame.pack(pady=20)
-        button = tk.Button(sub_frame, text=f"Topology", command=lambda: os.system("topology.py"))
+        button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['python', '-i', 'topology.py']))
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text=f"Connect Devices")
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text=f"Scan for Intrusion on Devices", command=lambda: os.system("intrusion_detection_v2.py"))
+        button = tk.Button(sub_frame, text=f"Scan for Intrusion on Devices", command=lambda: call(['python', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Display Ports", command=lambda: os.system("display_ports.py"))
+        button = tk.Button(sub_frame, text=f"Display Ports", command=lambda: call(['python', '-i', 'display_ports.py']))
         button.grid(row=0, column=4, padx=10)
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=8)
@@ -220,7 +221,7 @@ class App:
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Quick Enable Nightly Scans")
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Scan Script", command=lambda: os.system("scan2.1.py"))
+        button = tk.Button(sub_frame, text=f"Scan Script", command=lambda: call(['python', '-i', 'scan2.1py']))
         button.grid(row=0, column=4, padx=10)
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=8)
@@ -243,7 +244,7 @@ class App:
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Connectivity Test")
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Snort", command=lambda: os.system('snort.py'))
+        button = tk.Button(sub_frame, text=f"Snort", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=4, padx=10)
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=7)
@@ -319,8 +320,6 @@ class App:
         sub_frame = ttk.Frame(frame)
         sub_frame.pack(pady=20)
         button = tk.Button(sub_frame, text=f"Redo Setup", command=lambda: os.system('setup.c'))
-        button.grid(row=0, column=1)
-        button = tk.Button(sub_frame, text=f"Redo Setup", command=lambda: os.system('hotspot_setup.sh'))
         button.grid(row=0, column=1)
         return frame
 
