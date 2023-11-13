@@ -1,3 +1,5 @@
+# The above class creates a graphical user interface (GUI) for a secure home hub application with
+# different pages for alerts, scans, users, devices, network, power options, and setup.
 import tkinter as tk
 from tkinter import ttk
 import os
@@ -140,7 +142,7 @@ class App:
 
         return frame
     
-
+    #Create Devices Page
     def create_devices_page(self):
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -194,7 +196,7 @@ class App:
             canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['name']}\n{device['ip']}", fill="white")
         return frame
         
-        
+    #Create Scans page 
     def create_scans_page(self) :
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -228,6 +230,7 @@ class App:
         
         return frame
     
+    #Create Netowkr Page
     def create_network_page(self) :
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -250,6 +253,7 @@ class App:
         button.grid(row=1, column=7)
         return frame
     
+    #Create power options page
     def create_power_page(self) :
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -308,7 +312,7 @@ class App:
             print(f"Error: {e}")
     
     
-    
+    #Create setup page.
     def create_setup_page(self) :
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -321,6 +325,8 @@ class App:
         sub_frame.pack(pady=20)
         button = tk.Button(sub_frame, text=f"Redo Setup", command=lambda: os.system('setup.c'))
         button.grid(row=0, column=1)
+        button = tk.Button(sub_frame, text=f"Hotspot Setup", command=lambda: os.system('hotspot_setup.sh'))
+        button.grid(row=0, column=2)
         return frame
 
     def show_page(self, index):
