@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 
 void check_network_requirements() {
-    char* ip_address = "10.187.239.45"; // This should be the IP address of the device you're setting up.
+    char* ip_address = "10.42.0.0/24"; // This should be the IP address of the device you're setting up.
     char command[100];
     char result[10];
     char subnet_str[INET_ADDRSTRLEN];
