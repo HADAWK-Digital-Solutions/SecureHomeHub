@@ -33,5 +33,5 @@ def display_result(devices_list):
         print(device["ip"] + "\t\t" + device["mac"] + "\t\t" + name)
 
 if __name__ == "__main__":
-    devices_list = scan("192.168.50.1/24")
+    devices_list = scan("10.42.0.0/24")
     display_result(devices_list)
