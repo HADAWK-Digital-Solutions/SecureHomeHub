@@ -150,7 +150,7 @@ class App:
         return frame
     
 
-    def compare_files(self):
+    def compare_files(self, result_text):
         # Specify the path to the IoT_devices.txt file
         file_path = "IoT_devices.txt"
 
