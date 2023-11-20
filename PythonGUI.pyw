@@ -161,7 +161,7 @@ class App:
 
             # Compare the original content with the script output
             iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
-            iot_devices_script_output = subprocess.check_output(['python', iot_devices_script_path], universal_newlines=True)
+            iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
             
             if original_content == iot_devices_script_output:
                 result_text.set("The files are identical.")
@@ -191,7 +191,7 @@ class App:
         else:
             # If the file doesn't exist, run the script and capture the output
             iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
-            iot_devices_script_output = subprocess.check_output(['python', iot_devices_script_path], universal_newlines=True)
+            iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
             result_text.set(f"The file {file_path} does not exist. Script output:\n{iot_devices_script_output}")
 
     #Create Devices Page
