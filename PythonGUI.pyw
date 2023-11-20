@@ -5,6 +5,7 @@
 #Importing libraries
 import tkinter as tk
 from tkinter import ttk
+from tkinter import filedialog
 import os
 import subprocess
 from subprocess import call
@@ -185,7 +186,7 @@ class App:
                     differences.append(f"Line {i + 1} (Script): {script_output_lines[i]}")
 
             result_text.set("\n".join(differences))
-            
+
     #Create Devices Page
     def create_devices_page(self):
         frame = ttk.Frame(self.root)
