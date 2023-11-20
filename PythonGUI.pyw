@@ -149,11 +149,12 @@ class App:
 
         return frame
     
-    def compare_files():
-        # Read the contents of the original file
-        original_file_path = filedialog.askopenfilename(title="Select the original file",
-                                                        filetypes=[("Text files", "*.txt")])
-        
+
+
+    def compare_files(self):
+        # Specify the path to the IoT_devices.txt file
+        original_file_path = "IoT_devices.txt"
+
         with open(original_file_path, 'r') as file:
             original_content = file.read()
 
@@ -200,7 +201,7 @@ class App:
         sub_frame.pack(pady=20)
         button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['python', '-i', 'topology.py']))
         button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text=f"Connect Devices", command=compare_files)
+        button = tk.Button(sub_frame, text=f"Connect Devices", command=self.compare_files)
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Scan for Intrusion on Devices", command=lambda: call(['python', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=3, padx=10)
