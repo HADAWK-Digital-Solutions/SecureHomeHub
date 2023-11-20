@@ -11,6 +11,7 @@ from subprocess import call
 
 #The main application class is defined (App).
 #The class constructor (__init__) sets up the main window and configures its properties.
+
 class App:
     def __init__(self, root):
         self.root = root
@@ -160,7 +161,7 @@ class App:
         sub_frame.pack(pady=20)
         button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['python', '-i', 'topology.py']))
         button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text=f"Connect Devices")
+        button = tk.Button(sub_frame, text=f"Connect Devices", command=compare_files)
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Scan for Intrusion on Devices", command=lambda: call(['python', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=3, padx=10)
@@ -169,6 +170,44 @@ class App:
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=8)
         
+    def compare_files():
+        # Read the contents of the original file
+        original_file_path = filedialog.askopenfilename(title="Select the original file",
+                                                        filetypes=[("Text files", "*.txt")])
+        
+        with open(original_file_path, 'r') as file:
+            original_content = file.read()
+
+        # Run the IoT_devices.py script and capture its output
+        iot_devices_script_output = subprocess.check_output(['python', 'IoT_devices.py'], universal_newlines=True)
+
+        # Compare the original content with the script output
+        if original_content == iot_devices_script_output:
+            result_text.set("The files are identical.")
+        else:
+            # Display the differences
+            differences = []
+
+            # Split the content into lines for a more detailed comparison
+            original_lines = original_content.splitlines()
+            script_output_lines = iot_devices_script_output.splitlines()
+
+            # Iterate through lines and compare
+            for i, (orig_line, script_line) in enumerate(zip(original_lines, script_output_lines), start=1):
+                if orig_line != script_line:
+                    differences.append(f"Line {i}:\n  Original: {orig_line}\n  Script  : {script_line}")
+
+            # If one file is longer than the other, add remaining lines
+            if len(original_lines) > len(script_output_lines):
+                for i in range(len(script_output_lines), len(original_lines)):
+                    differences.append(f"Line {i + 1} (Original): {original_lines[i]}")
+
+            elif len(script_output_lines) > len(original_lines):
+                for i in range(len(original_lines), len(script_output_lines)):
+                    differences.append(f"Line {i + 1} (Script): {script_output_lines[i]}")
+
+            result_text.set("\n".join(differences))
+
         # Create a frame to hold the blue rectangles
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
@@ -200,6 +239,7 @@ class App:
             # Display the name and IP of the device
             canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['name']}\n{device['ip']}", fill="white")
         return frame
+    
         
     #Create Scans page 
     def create_scans_page(self) :
