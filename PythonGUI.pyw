@@ -192,7 +192,11 @@ class App:
             iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
             iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
             result_text.set(f"The file {file_path} does not exist. Script output:\n{iot_devices_script_output}")
+            
+        # Show the result in a pop-up dialog
+        tkinter.messagebox.showinfo("File Comparison Result", result_text.get())
 
+    
     #Create Devices Page
     def create_devices_page(self):
         frame = ttk.Frame(self.root)
