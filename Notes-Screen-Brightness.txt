@@ -1,0 +1,12 @@
+PATH:
+/sys/class/backlight/10-0045/
+
+FILE:
+brightness
+
+NOTES:
+1) may need to change permissions to 777 using chmod
+2) value is 0 to 255 for backlight brightness
+
+COMMAND: (where ## is the brightness value)
+echo ## > /sys/class/backlight/10-0045/brightness
