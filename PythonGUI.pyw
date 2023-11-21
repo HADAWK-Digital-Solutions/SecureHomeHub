@@ -19,7 +19,7 @@ class App:
         root.title("Secure Home Hub")
         root.geometry("800x480")
         
-
+        self.result_text = tk.StringVar()
         
         # Configure row and column weights
         root.grid_rowconfigure(0, weight=1)
