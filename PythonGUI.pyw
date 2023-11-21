@@ -151,6 +151,7 @@ class App:
     def compare_files(self):
         # Specify the path to the IoT_devices.txt file
         file_path = "IoT_devices.txt"
+        # Create a StringVar for result_text
         result_text = tk.StringVar()
         # Check if the file exists
         if os.path.exists(file_path):
