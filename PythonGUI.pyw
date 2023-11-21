@@ -149,55 +149,56 @@ class App:
         return frame
     
 
-   def compare_files(self):
-    # Specify the path to the IoT_devices.txt file
-    file_path = "IoT_devices.txt"
+    def compare_files(self):
+        # Specify the path to the IoT_devices.txt file
+        file_path = "IoT_devices.txt"
+        
+        # Create a StringVar for result_text
+        result_text = tk.StringVar()
     
-    # Create a StringVar for result_text
-    result_text = tk.StringVar()
-
-    # Check if the file exists
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as file:
-            original_content = file.read()
-
-        # Compare the original content with the script output
-        iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
-        iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
-
-        if original_content == iot_devices_script_output:
-            result_text.set("The files are identical.")
+        # Check if the file exists
+        if os.path.exists(file_path):
+            with open(file_path, 'r') as file:
+                original_content = file.read()
+    
+            # Compare the original content with the script output
+            iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
+            iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
+    
+            if original_content == iot_devices_script_output:
+                result_text.set("The files are identical.")
+            else:
+                # Display the differences
+                differences = []
+    
+                # Split the content into lines for a more detailed comparison
+                original_lines = original_content.splitlines()
+                script_output_lines = iot_devices_script_output.splitlines()
+    
+                # Iterate through lines and compare
+                for i, (orig_line, script_line) in enumerate(zip(original_lines, script_output_lines), start=1):
+                    if orig_line != script_line:
+                        differences.append(f"Line {i}:\n  Original: {orig_line}\n  Script  : {script_line}")
+    
+                # If one file is longer than the other, add remaining lines
+                if len(original_lines) > len(script_output_lines):
+                    for i in range(len(script_output_lines), len(original_lines)):
+                        differences.append(f"Line {i + 1} (Original): {original_lines[i]}")
+    
+                elif len(script_output_lines) > len(original_lines):
+                    for i in range(len(original_lines), len(script_output_lines)):
+                        differences.append(f"Line {i + 1} (Script): {script_output_lines[i]}")
+    
+                result_text.set("\n".join(differences))
         else:
-            # Display the differences
-            differences = []
+            # If the file doesn't exist, run the script and capture the output
+            iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
+            iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
+            result_text.set(f"The file {file_path} does not exist. Script output:\n{iot_devices_script_output}")
+    
+        # Show the result in a pop-up dialog
+        tk.messagebox.showinfo("File Comparison Result", result_text.get())
 
-            # Split the content into lines for a more detailed comparison
-            original_lines = original_content.splitlines()
-            script_output_lines = iot_devices_script_output.splitlines()
-
-            # Iterate through lines and compare
-            for i, (orig_line, script_line) in enumerate(zip(original_lines, script_output_lines), start=1):
-                if orig_line != script_line:
-                    differences.append(f"Line {i}:\n  Original: {orig_line}\n  Script  : {script_line}")
-
-            # If one file is longer than the other, add remaining lines
-            if len(original_lines) > len(script_output_lines):
-                for i in range(len(script_output_lines), len(original_lines)):
-                    differences.append(f"Line {i + 1} (Original): {original_lines[i]}")
-
-            elif len(script_output_lines) > len(original_lines):
-                for i in range(len(original_lines), len(script_output_lines)):
-                    differences.append(f"Line {i + 1} (Script): {script_output_lines[i]}")
-
-            result_text.set("\n".join(differences))
-    else:
-        # If the file doesn't exist, run the script and capture the output
-        iot_devices_script_path = os.path.join(os.getcwd(), 'IoT_devices.py')
-        iot_devices_script_output = subprocess.check_output(['python3', iot_devices_script_path], universal_newlines=True)
-        result_text.set(f"The file {file_path} does not exist. Script output:\n{iot_devices_script_output}")
-
-    # Show the result in a pop-up dialog
-    tk.messagebox.showinfo("File Comparison Result", result_text.get())
 
     
     #Create Devices Page
