@@ -195,7 +195,7 @@ class App:
             result_text.set(f"The file {file_path} does not exist. Script output:\n{iot_devices_script_output}")
             
         # Show the result in a pop-up dialog
-        tkinter.messagebox.showinfo("File Comparison Result", result_text.get())
+        tk.messagebox.showinfo("File Comparison Result", result_text.get())
 
     
     #Create Devices Page
