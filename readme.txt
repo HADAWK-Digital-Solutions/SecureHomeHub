@@ -1,12 +1,12 @@
 ==============================================================
-This is the private respository for HADAWK digital solutions.
+This is the private respository for HADWK digital solutions.
 !!! Authorized access only !!!
 ==============================================================
 
-Last updated: 2023-Oct-03
+Last updated: 2023-Nov-20
 
 All software, code, and documents, unless otherwise specified, are the intellectual 
-property of HADAWK Digitial Solutaions. Portions of this project contain open source
+property of HADWK Digitial Solutaions. Portions of this project contain open source
 components coverd subject to the GNU public licence.
 
 
@@ -14,7 +14,6 @@ HADAWK Digitial solutions is:
 
 Alexander "Alec" Robinson
 Habibullah "Habib" Rahimi
-Anthony "Arai" Byttynen
 Devon Woodman
 Wallace Silveira
 Kyle Fischer
