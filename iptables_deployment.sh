@@ -23,6 +23,9 @@ iptables -A OUTPUT -o lo -j ACCEPT
 # Allow established and related connections
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
+#This rule will allow traffic from any IP address within the 10.42.0.0/24 subnet to pass through the firewall.
+iptables -A INPUT -s 10.42.0.0/24 -j ACCEPT
+
 # Define a list of IoT device MAC addresses and their preferred hostnames
 declare -A IOT_DEVICES=(
     ["50:02:91:57:0A:DA"]="Tuya Bulb 1"
