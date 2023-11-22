@@ -1,6 +1,16 @@
 #!/bin/bash
 
-# Flush existing rules and set default policies
+log() {
+    echo "$(date +'%Y-%m-%d %H:%M:%S') - $1"
+}
+
+# Check if the script is run as root
+if [ "$(id -u)" -ne 0 ]; then
+    log "Error: This script must be run as root."
+    exit 1
+fi
+
+log "Flushing existing rules and setting default policies..."
 iptables -F
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -42,27 +52,37 @@ iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --updat
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
 
 # Log dropped packets to a log file
+log "Logging dropped packets..."
 iptables -A INPUT -j LOG --log-prefix "Dropped: " --log-level 7 -m limit --limit 5/m
 
 # Save the rules to persist across reboots
+log "Saving iptables rules..."
 iptables-save > /etc/iptables/SecureHomeHubRule.v4
 
-# ebtables operates by inspecting Ethernet frames as they pass through your Linux bridge.
-# Enabling you to define what type of traffic is permitted or forbidden based on MAC addresses and Ethernet frame fields.
+# Check if ebtables is installed
+if ! command -v ebtables &> /dev/null; then
+    log "Error: ebtables is not installed. Please install ebtables and try again."
+    exit 1
+fi
+
 # Save the ebtables rules
+log "Saving ebtables rules..."
 ebtables-save > /etc/ebtables/SecureHomeHubRule
 
 # Make sure ebtables service is enabled and started
+log "Enabling and starting ebtables service..."
 systemctl enable ebtables.service
 systemctl start ebtables.service
 
-# Install Filebeat if not already installed
+# Check if Filebeat is installed
 if ! dpkg -l | grep -q "filebeat"; then
+    log "Installing Filebeat..."
     sudo apt-get update
     sudo apt-get install -y filebeat
 fi
 
 # Create a Filebeat configuration for iptables logs
+log "Configuring Filebeat for iptables logs..."
 cat <<EOF > /etc/filebeat/iptables.yml
 filebeat.inputs:
   - type: log
@@ -75,5 +95,7 @@ output.elasticsearch:
 EOF
 
 # Start Filebeat with the custom configuration
+log "Starting Filebeat..."
 filebeat -e -c /etc/filebeat/iptables.yml
 
+log "Setup completed."
