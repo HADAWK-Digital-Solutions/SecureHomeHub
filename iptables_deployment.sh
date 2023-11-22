@@ -42,39 +42,30 @@ done
 iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --set --name SSH
 iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 4 --name SSH -j DROP
 
-# Allow RDP (Remote Desktop Protocol) traffic on port 3389
-# iptables -A INPUT -p tcp --dport 3389 -j ACCEPT
+# Allow SSH access for developers (replace the following with the actual IP addresses of your developers)
+# ALLOWED_IPS=("Alec_IP" "Kyle_IP" "Wallace_IP" "Devon_IP" "Habib_IP")
+#for IP in "${ALLOWED_SSH_IPS[@]}"; do
+#    iptables -A INPUT -p tcp --dport 22 -s "$IP" -j ACCEPT
+# done
+
+# Allow RDP access for developers (replace the following with the actual IP addresses of our Developers developers)
+# ALLOWED_IPS=("Alec_IP" "Kyle_IP" "Wallace_IP" "Devon_IP" "Habib_IP")
+# for IP in "${ALLOWED_RDP_IPS[@]}"; do
+#    iptables -A INPUT -p tcp --dport 3389 -s "$IP" -j ACCEPT
+# done
 
 # DROP vs REJECT (REJECT sends a rejection response, DROP silently drops packets)
 # For added security, uncomment the next line to use REJECT for incoming connections
 # iptables -A INPUT -j REJECT --reject-with icmp-host-prohibited
 
 # DDoS Protection (Example: Rate limiting)
+# Increasing botnet attacks in home IoT environments are growing as more tech devices get connected
 # Limit incoming ICMP packets (adjust rates as needed)
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
 
 # Log dropped packets to a log file
 log "Logging dropped packets..."
 iptables -A INPUT -j LOG --log-prefix "Dropped: " --log-level 7 -m limit --limit 5/m
-
-# Additional Security Rules (Add your custom rules here)
-
-# Rule 1: Allow DNS traffic (UDP and TCP)
-iptables -A INPUT -p udp --dport 53 -j ACCEPT
-iptables -A INPUT -p tcp --dport 53 -j ACCEPT
-
-# Rule 2: Allow NTP traffic (UDP)
-iptables -A INPUT -p udp --dport 123 -j ACCEPT
-
-# Rule 3: Allow ICMP echo replies (ping replies)
-iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
-
-# Rule 4: Allow outbound DNS traffic
-iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
-iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
-
-# Rule 5: Allow outbound NTP traffic
-iptables -A OUTPUT -p udp --dport 123 -j ACCEPT
 
 # Save the rules to persist across reboots
 log "Saving iptables rules..."
@@ -112,12 +103,4 @@ filebeat.inputs:
       - /var/log/iptables.log  # Update this path to the location of your iptables log file
 
 output.elasticsearch:
-  hosts: ["http://localhost:9200"]  # Update this to match your Elasticsearch host and port
-EOF
-
-# Start Filebeat with the custom configuration
-log "Starting Filebeat..."
-filebeat -e -c /etc/filebeat/iptables.yml
-
-log "Setup completed."
-
+  hosts: ["http://localhost:9200"]  # Update
