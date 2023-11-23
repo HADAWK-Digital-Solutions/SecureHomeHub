@@ -1,4 +1,4 @@
-import nmap
+import nmap3
 import socket
 
 def get_hostname(ip):
