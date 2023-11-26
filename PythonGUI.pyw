@@ -1,7 +1,3 @@
-# The above class creates a graphical user interface (GUI) for a secure home hub application with
-# different pages for alerts, scans, users, devices, network, power options, and setup.
-
-
 #Importing libraries
 import tkinter as tk
 from tkinter import ttk
@@ -292,27 +288,48 @@ class App:
         
         return frame
     
-    #Create Netowkr Page
-    def create_network_page(self) :
+    def toggle_kill_switch(self):
+        # Toggle between "up" and "down" commands
+        if self.kill_switch_state.get() == "down":
+            command = "sudo nmcli connection up 'Wired connection 1'"
+            self.kill_switch_state.set("up")
+        else:
+            command = "sudo nmcli connection down 'Wired connection 1'"
+            self.kill_switch_state.set("down")
+
+        # Execute the command
+        subprocess.run(command.split())
+
+    def create_network_page(self):
         frame = ttk.Frame(self.root)
         style = ttk.Style()
         style.configure("DarkGray.TFrame", background="#01325e")
         frame.configure(style="DarkGray.TFrame")
-        
+
         label = tk.Label(frame, text="Network Page")
         label.pack(pady=20)
         sub_frame = ttk.Frame(frame)
         sub_frame.pack(pady=20)
-        button = tk.Button(sub_frame, text=f"Connected Devices")
+
+        # Create a StringVar to track the state of the kill switch
+        self.kill_switch_state = tk.StringVar(value="down")
+
+        # Create the kill switch button
+        kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
+        kill_switch_button.grid(row=0, column=0, padx=10)
+
+        # Other buttons
+        button = tk.Button(sub_frame, text="Connected Devices")
         button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text=f"Internet Connection")
+        button = tk.Button(sub_frame, text="Internet Connection")
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text=f"Connectivity Test")
+        button = tk.Button(sub_frame, text="Connectivity Test")
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Snort", command=lambda: call(['python', '-i', 'snort.py']))
+        button = tk.Button(sub_frame, text="Snort", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=4, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
+        button = tk.Button(sub_frame, text="Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=7)
+
         return frame
     
     #Create power options page
