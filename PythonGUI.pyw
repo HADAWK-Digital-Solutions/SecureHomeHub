@@ -291,10 +291,10 @@ class App:
     def toggle_kill_switch(self):
         # Toggle between "up" and "down" commands
         if self.kill_switch_state.get() == "down":
-            command = "sudo nmcli connection up 'Wired connection 1'"
+            command = "sudo nmcli connection up Wired"
             self.kill_switch_state.set("up")
         else:
-            command = "sudo nmcli connection down 'Wired connection 1'"
+            command = "sudo nmcli connection down Wired"
             self.kill_switch_state.set("down")
 
         # Execute the command
