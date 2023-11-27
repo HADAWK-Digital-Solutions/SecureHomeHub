@@ -227,9 +227,12 @@ class App:
 
         # Fetch a list of connected IoT devices (replace this with your actual device fetching logic)
         device_list = [
-            {"name": "Device1", "ip": "192.168.1.1"},
-            {"name": "Device2", "ip": "192.168.1.2"},
-            {"name": "Device3", "ip": "192.168.1.3"},
+            {"name": "Device1", "ip": "10.42.0.28"},
+            {"name": "Device2", "ip": "10.42.0.48"},
+            {"name": "Device3", "ip": "10.42.0.52"},
+	        {"name": "Device4", "ip": "10.42.0.71"},
+	        {"name": "Device5", "ip": "10.42.0.96"},
+	        {"name": "Device6", "ip": "10.42.0.112"}
             # Add more devices as needed
         ]
 
