@@ -245,16 +245,25 @@ class App:
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
+        # Define a function to calculate the required canvas dimensions
+        def calculate_canvas_dimensions(device):
+            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
+            text_length = max(len(line) for line in text.split('\n'))
+            width = 15 * text_length  # Adjust the multiplier based on your preference
+            height = 30 * len(text.split('\n'))  # Adjust the multiplier based on your preference
+            return width, height
+        
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
-            # Calculate the required width and height based on the text content
-            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-            text_width = len(max(text.split('\n'), key=len)) * 10  # Adjust the multiplier based on your font size
-            text_height = len(text.split('\n')) * 20  # Adjust the multiplier based on your font size
-        
             # Create a Canvas widget for each square
-            canvas = tk.Canvas(rectangles_frame, bg="white", width=text_width, height=text_height)
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=1, height=1)  # Start with a small size
             canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
+        
+            # Calculate the required canvas dimensions
+            canvas_width, canvas_height = calculate_canvas_dimensions(device)
+        
+            # Configure the canvas with the calculated dimensions
+            canvas.config(width=canvas_width, height=canvas_height)
         
             # Define the coordinates for the top-left and bottom-right corners of the rectangle
             x1, y1 = 0, 0
@@ -264,7 +273,9 @@ class App:
             canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
         
             # Display the information of the device
+            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
             canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
+
 
 
         
