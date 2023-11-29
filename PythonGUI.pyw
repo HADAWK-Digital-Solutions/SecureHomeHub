@@ -259,7 +259,7 @@ class App:
             canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
         
             # Display the name and IP of the device
-            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['name']}\n{device['ip']}", fill="white")
+            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['IP']}\n{device['MAC']}", fill="white")
         
         return frame
 
