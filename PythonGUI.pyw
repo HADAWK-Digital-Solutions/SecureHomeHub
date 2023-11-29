@@ -227,7 +227,8 @@ class App:
 
 
 	
-	device_list = []
+	# Fetch a list of connected IoT devices (replace this with your actual device fetching logic)
+        device_list = []
 	# Specify the path to the devices_formatted.txt file
 	formatted_output_file = 'devices_formatted.txt'
 	
