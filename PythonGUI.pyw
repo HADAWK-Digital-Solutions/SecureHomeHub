@@ -225,6 +225,8 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
+
+	
 	device_list = []
 	# Specify the path to the devices_formatted.txt file
 	formatted_output_file = 'devices_formatted.txt'
