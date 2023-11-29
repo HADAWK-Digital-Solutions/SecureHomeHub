@@ -231,19 +231,26 @@ class App:
         
         try:
             with open(formatted_output_file, 'r') as f:
-                # Read each line and convert it back to a dictionary
+                # Read each line and process it
                 for line in f:
-                    # Remove the leading and trailing whitespaces and the curly braces
-                    line = line.strip('{}')
-                    
-                    # Split the line into key-value pairs
-                    key_value_pairs = [pair.strip() for pair in line.split(',')]
-                    
-                    # Create a dictionary from the key-value pairs
-                    device_info = dict(pair.split(':') for pair in key_value_pairs)
-                    
-                    # Append the dictionary to the device_list
-                    device_list.append(device_info)
+                    # Remove leading and trailing whitespaces
+                    line = line.strip()
+        
+                    # Check if the line is not empty
+                    if line:
+                        # Split the line into key and value using the first colon found
+                        key, value = line.split(':', 1)
+        
+                        # Remove leading and trailing whitespaces from key and value
+                        key = key.strip()
+                        value = value.strip()
+        
+                        # Create a dictionary from the key-value pair
+                        device_info = {key: value}
+        
+                        # Append the dictionary to the device_list
+                        device_list.append(device_info)
+        
         except FileNotFoundError:
             print(f"The file {formatted_output_file} does not exist.")
         
