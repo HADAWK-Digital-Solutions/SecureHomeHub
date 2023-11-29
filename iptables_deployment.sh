@@ -47,33 +47,5 @@ iptables -A INPUT -j LOG --log-prefix "Dropped: " --log-level 7 -m limit --limit
 # Save the rules to persist across reboots
 iptables-save > /etc/iptables/SecureHomeHubRule.v4
 
-# ebtables operates by inspecting Ethernet frames as they pass through your Linux bridge.
-# Enabling you to define what type of traffic is permitted or forbidden based on MAC addresses and Ethernet frame fields.
-# Save the ebtables rules
-ebtables-save > /etc/ebtables/SecureHomeHubRule
-
-# Make sure ebtables service is enabled and started
-systemctl enable ebtables.service
-systemctl start ebtables.service
-
-# Install Filebeat if not already installed
-if ! dpkg -l | grep -q "filebeat"; then
-    sudo apt-get update
-    sudo apt-get install -y filebeat
-fi
-
-# Create a Filebeat configuration for iptables logs
-cat <<EOF > /etc/filebeat/iptables.yml
-filebeat.inputs:
-  - type: log
-    enabled: true
-    paths:
-      - /var/log/iptables.log  # Update this path to the location of your iptables log file
-
-output.elasticsearch:
-  hosts: ["http://localhost:9200"]  # Update this to match your Elasticsearch host and port
-EOF
-
-# Start Filebeat with the custom configuration
-filebeat -e -c /etc/filebeat/iptables.yml
-
+# Optionally, you can reload iptables to apply the rules immediately
+# systemctl reload iptables

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Home Hub Manual</title>
+</head>
+<body>
+
+    <!-- Image at the Top -->
+    <img src="C:\Users\Administrator\Pictures\Screenshots\HomeHubMain.png" alt="Page 1" style="width: 100%; height: 100%;">
+
+    <div id="Introduction">Introducing the Secure Home Hub</div>
+    <p>The Secure Home Hub will deliver a physical device with software that will provide home computer network monitoring, network security, and home smart device control. This will necessitate a hardware platform capable of running the operating system and software outlined by the design document.</p>
+    <p><strong>Hardware:</strong></p>
+    <p>Our chosen hardware platform is the Raspberry Pi 4, model B, equipped with 8GB of RAM and a 32GB SD card for onboard storage of the operating system and essential software. This compact and versatile device is enclosed in a housing featuring a user-friendly 7-inch touchscreen display for effortless interaction. The heart of this device is an ARM64 4-core CPU, ensuring optimal performance.</p>
+    <p><strong>Operating Systems:</strong></p>
+    <p>At the core of the Secure Home Hub, the Parrot Linux operating system serves as the primary software platform. It not only provides a secure Linux kernel but also integrates various cybersecurity tools.</p>
+    <p><strong>Home Hub Interface:</strong></p>
+    <p>The primary interface for user interaction will be the 7-inch capacitive touchscreen included in the unit. There will also be the option to access the interface via a web browser from other devices connected to the user's home computer network.</p>
+    <p><strong>Smart Home Device Private Server:</strong></p>
+    <p>The private server software will allow control of local IoT devices in the client's home, with the absolute minimum possible user data propagated to the IoT device manufacturers.</p>
+    <p><strong>Network Device Inventory and Security:</strong></p>
+    <p>The hub will scan the user’s network to provide an inventory of all the devices present on the network, as well as providing other information about those devices. The hub will also have several network security features that can be activated, including scanning for threats, malicious activity, or devices performing inappropriate actions. Additional related features may be added depending on the timeline next semester.</p>
+
+    <div id="Setup">How to Setup Your Secure Home Hub</div>
+    <p>When setting up the Secure Home Hub, users embark on a series of essential steps to configure the system for optimal functionality and security. The Secure Home Hub setup script guides users through tasks like creating directories, copying files, configuring network settings, and more. Users are prompted to create user accounts and establish passwords, with the 'Password Policy' script enforcing a stringent password policy. Together, these scripts contribute to the establishment of a secure environment for the 'Secure Home Hub.'</p>
+
+    <div id="NetworkConnections">Network Connections</div>
+    <div id="LAN">LAN (Connecting to LAN and Troubleshooting LAN Connection)</div>
+    <p>Setting up your IoT devices on a Local Area Network (LAN) is an important step for seamless operation. Most IoT devices can connect to the internet via a central point, such as a router or modem. Connect your IoT devices to the LAN using an Ethernet cable for a stable and reliable connection. This section guides you through the connection process and provides troubleshooting steps for connectivity issues.</p>
+
+    <div id="Wireless">Wireless (Connecting Wireless IoT Devices)</div>
+    <p>The Secure Home Hub offers wireless connectivity for IoT devices, making integration easy. Whether adding smart lights, thermostats, cameras, or other IoT devices, the Secure Home Hub simplifies the process. The steps include accessing device settings, adding a new device, choosing the device type, scanning for devices, selecting the device, and connecting the device. This section ensures a smooth integration process for all wireless IoT devices.</p>
+
+    <div id="Warnings">Warnings</div>
+    <p>When using an IoT device, the user manual provides important safety and security warnings. These reminders help keep users safe and protect devices and data. Guidelines include handling the device safely, avoiding overheating, keeping it away from water, setting strong passwords, and updating device software. Tips on device placement, cleaning, environmental considerations, and maintaining personal data privacy are also provided.</p>
+
+    <div id="Vulnerabilities">Vulnerabilities</div>
+    <p>When the Secure Home Hub detects a vulnerability, it takes action to protect your network. It alerts you about the specific vulnerability, referencing a list of known vulnerabilities from trusted sources. The hub assists you in addressing the issue, providing guidance on patching the vulnerability and offering common steps to prevent similar issues in the future. This proactive approach ensures the security and stability of your network.</p>
+
+    <div id="Scans">Scans</div>
+    <div id="ScanTimes">Scan Times</div>
+    <p>Access detailed information about the times scans were triggered. This section provides a chronological list of all scans along with the date and time of each occurrence.</p>
+
+    <div id="ScanAfterAlerts">Scan after Alerts</div>
+    <p>Configure the Secure Home Hub to automatically initiate scans after receiving alerts. This feature enhances the security posture by proactively scanning for potential threats following alert events.</p>
+
+    <div id="QuickEnableNightlyScans">Quick Enable Nightly Scans</div>
+    <p>Enable nightly scans quickly with this feature. Nightly scans help ensure continuous monitoring and early detection of security issues during off-peak hours.</p>
+
+    <div id="ScanScript">Scan Script</div>
+    <p>Create and customize scan scripts based on your specific security requirements. This section provides flexibility in tailoring scan scripts to address unique network security concerns.</p>
+
+    <div id="Users">Users</div>
+    <div id="UserPrivileges">User privileges</div>
+    <p>Manage user privileges to control access and permissions within the Secure Home Hub. Customize user roles and permissions to align with your security requirements.</p>
+
+    <div id="Superusers">Superusers</div>
+    <p>Designate superusers with elevated privileges. Superusers have additional access and control over critical features. Define and manage superuser roles through this section.</p>
+
+    <div id="SuperUserPrivileges">Super User Privileges</div>
+    <p>Define specific privileges for superusers, including access to sensitive information and critical system settings. This section provides granular control over superuser permissions.</p>
+
+    <div id="Devices">Devices</div>
+    <div id="Topology">Topology</div>
+    <p>Visualize the network topology of connected devices. The Topology section provides an overview of device interconnections and relationships within your network.</p>
+
+    <div id="ConnectDevices">Connect Devices</div>
+    <p>Manage and connect IoT devices seamlessly. This section guides you through the process of adding new devices to the Secure Home Hub and ensuring a secure and stable connection.</p>
+
+    <div id="ScanForIntrusionOnDevices">Scan for Intrusion on Devices</div>
+    <p>Initiate scans specifically targeting connected devices for intrusion detection. Identify and address potential security threats by regularly scanning IoT devices within your network.</p>
+
+    <div id="DisplayPorts">Display Ports</div>
+    <p>View and manage device ports through the Display Ports section. Understanding and controlling device ports contribute to network security and device management.</p>
+
+    <div id="Network">Network</div>
+    <div id="ConnectedDevices">Connected Devices</div>
+    <p>View a list of currently connected devices on your network. This section provides real-time information about the devices actively communicating within your home network.</p>
+
+    <div id="InternetConnection">Internet Connection</div>
+    <p>Monitor and troubleshoot your internet connection. The Internet Connection section offers insights into the status and performance of your home network's internet connection.</p>
+
+    <div id="ConnectivityTest">Connectivity Test</div>
+    <p>Perform a connectivity test to assess the reliability of your network connection. This feature helps identify and address potential issues affecting network performance.</p>
+
+    <div id="Snort">Snort</div>
+    <p>Explore and configure Snort settings for enhanced network security. Snort is a powerful intrusion detection and prevention system, adding an extra layer of protection to your home network.</p>
+
+    <div id="PowerOff">Power Off</div>
+    <div id="PowerOff">Power Off</div>
+    <p>Initiate the power-off process for the Secure Home Hub. This section provides a safe and controlled way to power off the device when needed.</p>
+
+    <div id="Lock">Lock</div>
+    <p>Lock the Secure Home Hub for additional security. The Lock feature restricts access to the device interface, adding an extra layer of protection against unauthorized use.</p>
+
+    <div id="Restart">Restart</div>
+    <p>Restart the Secure Home Hub to apply changes or address system issues. This section guides you through the process of restarting the device for optimal performance.</p>
+
+</body>
+</html>
