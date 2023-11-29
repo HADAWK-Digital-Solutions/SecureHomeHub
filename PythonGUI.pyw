@@ -243,8 +243,6 @@ class App:
         print(device_list)
         
         # Calculate the number of columns for the grid
-        # Calculate the number of columns for the grid
-        # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
         # Define a function to calculate the required canvas dimensions
@@ -267,14 +265,19 @@ class App:
             # Configure the canvas with the calculated dimensions
             canvas.config(width=canvas_width, height=canvas_height)
         
+            # Define the padding
+            padding = 5
+        
+            # Define the coordinates for the top-left and bottom-right corners of the rectangle
+            x1, y1 = padding, padding
+            x2, y2 = canvas_width - padding, canvas_height - padding
+        
+            # Create a rectangle on the canvas
+            canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
+        
             # Display the information of the device
             text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-        
-            # Create a rectangle that spans the entire canvas
-            canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill="blue")
-        
-            # Display the information of the device on top of the rectangle
-            canvas.create_text(canvas_width / 2, canvas_height / 2, text=text, fill="white")
+            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
 
 
         
