@@ -35,7 +35,7 @@ def process_nmap_output(input_file, output_file):
                 elif "Read data files from:" in line:
                     break  # end of scan
         
-                    f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
+            f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
         
         print(f"Formatted devices information written to {output_file}")
     except Exception as e:
