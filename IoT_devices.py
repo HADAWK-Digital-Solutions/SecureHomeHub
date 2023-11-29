@@ -21,7 +21,6 @@ def process_nmap_output(input_file, output_file):
             lines = f.readlines()
         
         with open(output_file, "w") as f:
-            f.write("# IP Address       MAC Address             Status\n")
         
             for line in lines:
                 if "Nmap scan report for" in line:
