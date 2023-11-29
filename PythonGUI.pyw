@@ -231,11 +231,11 @@ class App:
         device_list = []
         # Specify the path to the devices_formatted.txt file
         formatted_output_file = 'devices_formatted.txt'
-        try:
+        try:	
 	    with open(formatted_output_file, 'r') as f:
-	        # Read each line and convert it back to a dictionary
-	        for line in f:
-	            # Remove the leading and trailing whitespaces and the curly braces
+                # Read each line and convert it back to a dictionary
+                for line in f:
+                # Remove the leading and trailing whitespaces and the curly braces
 	            line = line.strip('{}')
 	
 	            # Split the line into key-value pairs
