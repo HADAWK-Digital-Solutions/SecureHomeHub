@@ -244,6 +244,7 @@ class App:
         
         # Calculate the number of columns for the grid
         # Calculate the number of columns for the grid
+        # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
         # Define a function to calculate the required canvas dimensions
@@ -256,27 +257,24 @@ class App:
         
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
+            # Create a Canvas widget for each square
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=1, height=1)  # Start with a small size
+            canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
+        
             # Calculate the required canvas dimensions
             canvas_width, canvas_height = calculate_canvas_dimensions(device)
         
-            # Create a Canvas widget for each square with the calculated dimensions
-            canvas = tk.Canvas(rectangles_frame, bg="white", width=canvas_width, height=canvas_height)
-            canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
-        
-            # Clear the canvas
-            canvas.delete("all")
-        
-            # Define the coordinates for the top-left and bottom-right corners of the rectangle
-            x1, y1 = 0, 0
-            x2, y2 = canvas_width, canvas_height
-        
-            # Create a rectangle on the canvas
-            canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
+            # Configure the canvas with the calculated dimensions
+            canvas.config(width=canvas_width, height=canvas_height)
         
             # Display the information of the device
             text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
-
+        
+            # Create a rectangle that spans the entire canvas
+            canvas.create_rectangle(0, 0, canvas_width, canvas_height, fill="blue")
+        
+            # Display the information of the device on top of the rectangle
+            canvas.create_text(canvas_width / 2, canvas_height / 2, text=text, fill="white")
 
 
         
