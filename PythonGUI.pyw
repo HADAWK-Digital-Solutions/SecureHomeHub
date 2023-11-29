@@ -225,38 +225,23 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
-        device_list = []  # Initialize the new list
+        import ast
 
-        # Specify the path to the devices_formatted.txt file
-        formatted_output_file = 'devices_formatted.txt'
+        # Open devices_formatted.txt and read each line
+        with open('devices_formatted.txt', 'r') as f:
+            lines = f.readlines()
         
-        try:
-            with open(formatted_output_file, 'r') as f:
-                # Read each line and process it
-                for line in f:
-                    # Remove leading and trailing whitespaces
-                    line = line.strip()
+        # Initialize the devices_list
+        devices_list = []
         
-                    # Check if the line is not empty and contains a colon
-                    if line and ':' in line:
-                        # Split the line into key and value using the first colon found
-                        key, value = line.split(':', 1)
+        # Iterate through each line, convert it to a dictionary, and append to devices_list
+        for line in lines:
+            device_info = ast.literal_eval(line.strip())
+            devices_list.append(device_info)
         
-                        # Remove leading and trailing whitespaces from key and value
-                        key = key.strip()
-                        value = value.strip()
-        
-                        # Create a dictionary from the key-value pair
-                        device_info = {key: value}
-        
-                        # Append the dictionary to the device_list
-                        device_list.append(device_info)
-        
-        except FileNotFoundError:
-            print(f"The file {formatted_output_file} does not exist.")
-        
-        # Now, device_list contains dictionaries with information from devices_formatted.txt
-        
+        # Now devices_list contains the information from devices_formatted.txt
+        print(devices_list)
+
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
