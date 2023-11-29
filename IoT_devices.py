@@ -11,6 +11,37 @@ def run_nmap(subnet, output_file):
 
 def process_nmap_output(input_file, output_file):
     try:
+        # Python script to parse nmap scan output and generate devices_formatted.txt
+
+        input_file = "devicescan.txt"
+        output_file = "devices_formatted.txt"
+        
+        with open(input_file, "r") as f:
+            lines = f.readlines()
+        
+        with open(output_file, "w") as f:
+            f.write("# IP Address       MAC Address             Status\n")
+        
+            for line in lines:
+                if "Nmap scan report for" in line:
+                    ip_address = line.split()[-1]
+                elif "MAC Address:" in line:
+                    mac_address = line.split()[-1]
+                    status = "Up"
+                elif "Host is up" in line:
+                    status = "Up"
+                elif "Host is down" in line:
+                    status = "Down"
+                elif "Read data files from:" in line:
+                    break  # end of scan
+        
+                    f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
+        
+        print(f"Formatted devices information written to {output_file}")
+
+
+
+        
         with open(input_file, 'r') as file:
             content = file.read()
 
