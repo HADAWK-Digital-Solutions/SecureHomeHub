@@ -31,7 +31,7 @@ def process_nmap_output(input_file, output_file):
                     status = "Up"
         
                 elif "MAC Address:" in line:
-                    mac_address = line.split()[-2]
+                    mac_address = ' '.join(line.split()[2:])
                     f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
         
         print(f"Formatted devices information written to {output_file}")
