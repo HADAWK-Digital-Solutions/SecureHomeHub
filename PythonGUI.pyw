@@ -225,17 +225,33 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Fetch a list of connected IoT devices (replace this with your actual device fetching logic)
-        device_list = [
-            {"name": "Device1", "ip": "10.42.0.28"},
-            {"name": "Device2", "ip": "10.42.0.48"},
-            {"name": "Device3", "ip": "10.42.0.52"},
-	        {"name": "Device4", "ip": "10.42.0.71"},
-	        {"name": "Device5", "ip": "10.42.0.96"},
-	        {"name": "Device6", "ip": "10.42.0.112"}
-            # Add more devices as needed
-        ]
+	device_list = []
+	# Specify the path to the devices_formatted.txt file
+	formatted_output_file = 'devices_formatted.txt'
+	
+	try:
+	    with open(formatted_output_file, 'r') as f:
+	        # Read each line and convert it back to a dictionary
+	        for line in f:
+	            # Remove the leading and trailing whitespaces and the curly braces
+	            line = line.strip('{}')
+	            
+	            # Split the line into key-value pairs
+	            key_value_pairs = [pair.strip() for pair in line.split(',')]
+	            
+	            # Create a dictionary from the key-value pairs
+	            device_info = dict(pair.split(':') for pair in key_value_pairs)
+	            
+	            # Append the dictionary to the device_list
+	            device_list.append(device_info)
+	except FileNotFoundError:
+	    print(f"The file {formatted_output_file} does not exist.")
+	
+	# Now, device_list contains dictionaries with information from devices_formatted.txt
+	
+		
 
+	    
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
 
