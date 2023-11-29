@@ -225,53 +225,50 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
-
-	
-	# Fetch a list of connected IoT devices (replace this with your actual device fetching logic)
         device_list = []
         # Specify the path to the devices_formatted.txt file
         formatted_output_file = 'devices_formatted.txt'
-        try:	
-	    with open(formatted_output_file, 'r') as f:
+        
+        try:
+            with open(formatted_output_file, 'r') as f:
                 # Read each line and convert it back to a dictionary
                 for line in f:
-                # Remove the leading and trailing whitespaces and the curly braces
-	            line = line.strip('{}')
-	
-	            # Split the line into key-value pairs
-	            key_value_pairs = [pair.strip() for pair in line.split(',')]
-	
-	            # Create a dictionary from the key-value pairs
-	            device_info = dict(pair.split(':') for pair in key_value_pairs)
-	
-	            # Append the dictionary to the device_list
-	            device_list.append(device_info)
-	except FileNotFoundError:
-	    print(f"The file {formatted_output_file} does not exist.")
-	
-	# Now, device_list contains dictionaries with information from devices_formatted.txt
-	
-	# Calculate the number of columns for the grid
-	num_columns = 3  # You can adjust this based on your layout
-	
-	# Iterate over the device list and create a square for each device
-	for i, device in enumerate(device_list):
-	    # Create a Canvas widget for each square
-	    canvas = tk.Canvas(rectangles_frame, bg="white", width=150, height=50)
-	    canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
-	
-	    # Define the coordinates for the top-left and bottom-right corners of the rectangle
-	    x1, y1 = 0, 0
-	    x2, y2 = canvas.winfo_reqwidth(), canvas.winfo_reqheight()
-	
-	    # Create a rectangle on the canvas
-	    canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
-	
-	    # Display the name and IP of the device
-	    canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['name']}\n{device['ip']}", fill="white")
-	
-	# Return the frame
-	return frame
+                    # Remove the leading and trailing whitespaces and the curly braces
+                    line = line.strip('{}')
+                    
+                    # Split the line into key-value pairs
+                    key_value_pairs = [pair.strip() for pair in line.split(',')]
+                    
+                    # Create a dictionary from the key-value pairs
+                    device_info = dict(pair.split(':') for pair in key_value_pairs)
+                    
+                    # Append the dictionary to the device_list
+                    device_list.append(device_info)
+        except FileNotFoundError:
+            print(f"The file {formatted_output_file} does not exist.")
+        
+        # Now, device_list contains dictionaries with information from devices_formatted.txt
+        
+        # Calculate the number of columns for the grid
+        num_columns = 3  # You can adjust this based on your layout
+        
+        # Iterate over the device list and create a square for each device
+        for i, device in enumerate(device_list):
+            # Create a Canvas widget for each square
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=150, height=50)
+            canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
+        
+            # Define the coordinates for the top-left and bottom-right corners of the rectangle
+            x1, y1 = 0, 0
+            x2, y2 = canvas.winfo_reqwidth(), canvas.winfo_reqheight()
+        
+            # Create a rectangle on the canvas
+            canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
+        
+            # Display the name and IP of the device
+            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['name']}\n{device['ip']}", fill="white")
+        
+        return frame
 
     #Create Scans page 
     def create_scans_page(self) :
