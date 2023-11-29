@@ -241,14 +241,14 @@ class App:
         
         # Now devices_list contains the information from devices_formatted.txt
         print(device_list)
-
+        
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
             # Create a Canvas widget for each square
-            canvas = tk.Canvas(rectangles_frame, bg="white", width=150, height=50)
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=250, height=100)
             canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
         
             # Define the coordinates for the top-left and bottom-right corners of the rectangle
@@ -258,8 +258,12 @@ class App:
             # Create a rectangle on the canvas
             canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
         
-            # Display the name and IP of the device
-            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=f"{device['IP']}\n{device['MAC']}", fill="white")
+            # Display the information of the device
+            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
+            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
+        
+        # Adjust the canvas width and height accordingly
+
         
         return frame
 
