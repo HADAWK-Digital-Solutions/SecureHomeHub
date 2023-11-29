@@ -15,6 +15,7 @@ def process_nmap_output(input_file, output_file):
 
         input_file = "devicescan.txt"
         output_file = "devices_formatted.txt"
+        devices_list = []  # Initialize the list
         
         with open(input_file, "r") as f:
             lines = f.readlines()
