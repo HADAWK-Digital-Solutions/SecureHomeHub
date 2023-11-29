@@ -4,7 +4,7 @@ import subprocess
 def run_nmap(subnet, output_file):
     try:
         # Run the sudo nmap command and redirect the output to the specified file
-        subprocess.run(['sudo', 'nmap', '-v', '-R', '-sn', '-PE', '-PS80', '-PU40,125', subnet, nmap_output, '>', output_file], check=True)
+        subprocess.run(['sudo', 'nmap', '-v', '-R', '-sn', '-PE', '-PS80', '-PU40,125', subnet, '-oN', output_file], check=True)
         print(f"Nmap scan results have been written to {output_file}")
     except subprocess.CalledProcessError as e:
         print(f"Error running nmap: {e}")
@@ -31,7 +31,6 @@ def process_nmap_output(input_file, output_file):
 
 # Specify the subnet and file paths
 subnet = '10.42.0.0/24'
-nmap_output = """-oG - | grep "Status: Up" | awk '{print "{\"name\": \""$2"\", \"ip\": \""$2"\", \"mac\":\""system("arp -e | grep "$2" | awk '\''{print $3}'\'")"\"},"}'"""
 nmap_output_file = 'devicescan.txt'
 formatted_output_file = 'devices_formatted.txt'
 
