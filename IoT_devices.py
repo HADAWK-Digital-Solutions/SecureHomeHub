@@ -10,7 +10,7 @@ output_file = "online_devices.txt"
 try:
     nmap_command = f"sudo nmap -v -R -sn -PE -PS80 -PU40,125 {subnet} -oG -"
     grep_command = "grep 'Status: Up'"
-    awk_command = r"awk '{print \"{\"name\": \"\"$2\"\", \"ip\": \"\"$2\"\", \"mac\":\"\"system(\"arp -e | grep \"\"$2\"\" | awk \'{print $3}\'\")\"}\"}'"
+    awk_command = r"awk '{print \"{'name': '\"$2\"', 'ip': '\"$2\"', 'mac': '\"system(\"arp -e | grep \"$2\" | awk '{print $3}'\")\"'},\"}'"
 
     full_command = f"{nmap_command} | {grep_command} | {awk_command} > {output_file}"
 
