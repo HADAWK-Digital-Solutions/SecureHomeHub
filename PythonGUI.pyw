@@ -225,7 +225,8 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
-        device_list = []
+        device_list = []  # Initialize the new list
+
         # Specify the path to the devices_formatted.txt file
         formatted_output_file = 'devices_formatted.txt'
         
@@ -236,8 +237,8 @@ class App:
                     # Remove leading and trailing whitespaces
                     line = line.strip()
         
-                    # Check if the line is not empty
-                    if line:
+                    # Check if the line is not empty and contains a colon
+                    if line and ':' in line:
                         # Split the line into key and value using the first colon found
                         key, value = line.split(':', 1)
         
