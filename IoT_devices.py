@@ -38,25 +38,6 @@ def process_nmap_output(input_file, output_file):
                     f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
         
         print(f"Formatted devices information written to {output_file}")
-
-
-
-        
-        with open(input_file, 'r') as file:
-            content = file.read()
-
-        # Use regular expressions to extract relevant information
-        pattern = re.compile(r'Nmap scan report for (.+?) \((\d+\.\d+\.\d+\.\d+)\).*?MAC Address: ([\da-fA-F:]+)', re.DOTALL)
-        matches = pattern.findall(content)
-
-        # Write formatted information to the output file
-        with open(output_file, 'w') as out_file:
-            for match in matches:
-                name, ip, mac = match
-                formatted_output = f'{{"name": "{name}", "ip": "{ip}", "mac": "{mac}"}},'
-                out_file.write(formatted_output + '\n')
-
-        print(f"Processed scan results have been written to {output_file}")
     except Exception as e:
         print(f"Error processing Nmap output: {e}")
 
