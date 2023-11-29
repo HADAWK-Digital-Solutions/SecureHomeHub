@@ -25,19 +25,17 @@ def process_nmap_output(input_file, output_file):
             for line in lines:
                 if "Nmap scan report for" in line:
                     ip_address = line.split()[-1]
-                elif "MAC Address:" in line:
-                    mac_address = line.split()[-1]
-                    status = "Up"
+                    status = "Down"  # Assume the host is down by default
+        
                 elif "Host is up" in line:
                     status = "Up"
-                elif "Host is down" in line:
-                    status = "Down"
-                elif "Read data files from:" in line:
-                    break  # end of scan
         
-            f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
+                elif "MAC Address:" in line:
+                    mac_address = line.split()[-1]
+                    f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
         
         print(f"Formatted devices information written to {output_file}")
+
     except Exception as e:
         print(f"Error processing Nmap output: {e}")
 
