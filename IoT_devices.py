@@ -32,9 +32,22 @@ def process_nmap_output(input_file, output_file):
         
                 elif "MAC Address:" in line:
                     mac_address = ' '.join(line.split()[2:])
-                    f.write(f"{ip_address.ljust(16)}{mac_address.ljust(24)}{status}\n")
-        
-        print(f"Formatted devices information written to {output_file}")
+
+                    
+                    # Create a dictionary for each device
+                    device_info = {
+                        "IP": ip_address,
+                        "MAC": mac_address,
+                        "Status": status
+                    }
+            
+                    # Append the dictionary to the list
+                    devices_list.append(device_info)
+
+with open(output_file, "w") as f:
+    # Write each dictionary as a separate line in the output file
+    for device_info in devices_list:
+        f.write(str(device_info) + "\n")
 
     except Exception as e:
         print(f"Error processing Nmap output: {e}")
