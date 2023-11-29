@@ -4,7 +4,7 @@ import subprocess
 def run_nmap(subnet, output_file):
     try:
         # Run the sudo nmap command and redirect the output to the specified file
-        subprocess.run(['sudo', 'nmap', '-v', '-R', '-sn', '-PE', '-PS80', '-PU40,125', '-sL', subnet, '-oN', output_file], check=True)
+        subprocess.run(['sudo', 'nmap', '-v', '-R', '-sn', '-PE', '-PS80', '-PU40,125', subnet, '-oN', output_file], check=True)
         print(f"Nmap scan results have been written to {output_file}")
     except subprocess.CalledProcessError as e:
         print(f"Error running nmap: {e}")
