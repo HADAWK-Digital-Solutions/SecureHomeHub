@@ -228,10 +228,10 @@ class App:
 
 	
 	# Fetch a list of connected IoT devices (replace this with your actual device fetching logic)
-	device_list = []
-	# Specify the path to the devices_formatted.txt file
-	formatted_output_file = 'devices_formatted.txt'
-	try:
+        device_list = []
+        # Specify the path to the devices_formatted.txt file
+        formatted_output_file = 'devices_formatted.txt'
+        try:
 	    with open(formatted_output_file, 'r') as f:
 	        # Read each line and convert it back to a dictionary
 	        for line in f:
@@ -273,8 +273,6 @@ class App:
 	# Return the frame
 	return frame
 
-    
-        
     #Create Scans page 
     def create_scans_page(self) :
         frame = ttk.Frame(self.root)
