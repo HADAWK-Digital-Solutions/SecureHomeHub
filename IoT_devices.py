@@ -45,11 +45,9 @@ def process_nmap_output(input_file, output_file):
                     # Append the dictionary to the list
                     devices_list.append(device_info)
 
-with open(output_file, "w") as f:
-    # Write each dictionary as a separate line in the output file
-    for device_info in devices_list:
-        f.write(str(device_info) + "\n")
-
+            # Write each dictionary as a separate line in the output file
+            for device_info in devices_list:
+                f.write(str(device_info) + "\n")
     except Exception as e:
         print(f"Error processing Nmap output: {e}")
 
