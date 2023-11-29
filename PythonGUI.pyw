@@ -232,15 +232,15 @@ class App:
             lines = f.readlines()
         
         # Initialize the devices_list
-        devices_list = []
+        device_list = []
         
         # Iterate through each line, convert it to a dictionary, and append to devices_list
         for line in lines:
             device_info = ast.literal_eval(line.strip())
-            devices_list.append(device_info)
+            device_list.append(device_info)
         
         # Now devices_list contains the information from devices_formatted.txt
-        print(devices_list)
+        print(device_list)
 
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
