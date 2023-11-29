@@ -247,8 +247,13 @@ class App:
         
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
+            # Calculate the required width and height based on the text content
+            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
+            text_width = len(max(text.split('\n'), key=len)) * 10  # Adjust the multiplier based on your font size
+            text_height = len(text.split('\n')) * 20  # Adjust the multiplier based on your font size
+        
             # Create a Canvas widget for each square
-            canvas = tk.Canvas(rectangles_frame, bg="white", width=250, height=100)
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=text_width, height=text_height)
             canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
         
             # Define the coordinates for the top-left and bottom-right corners of the rectangle
@@ -259,10 +264,8 @@ class App:
             canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
         
             # Display the information of the device
-            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
             canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
-        
-        # Adjust the canvas width and height accordingly
+
 
         
         return frame
