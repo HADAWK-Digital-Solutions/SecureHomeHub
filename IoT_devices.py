@@ -1,21 +1,41 @@
+import re
 import subprocess
 
-# Define the subnet you want to scan
-subnet = "10.42.0.0/24"
+def run_nmap(subnet, output_file):
+    try:
+        # Run the sudo nmap command and redirect the output to the specified file
+        subprocess.run(['sudo', 'nmap', '-v', '-R', '-sn', '-PE', '-PS80', '-PU40,125', subnet, '-oG', output_file], check=True)
+        print(f"Nmap scan results have been written to {output_file}")
+    except subprocess.CalledProcessError as e:
+        print(f"Error running nmap: {e}")
 
-# Define the output file path
-output_file = "online_devices.txt"
+def process_nmap_output(input_file, output_file):
+    try:
+        with open(input_file, 'r') as file:
+            content = file.read()
 
-# Run the nmap command using subprocess
-try:
-    nmap_command = f"sudo nmap -v -R -sn -PE -PS80 -PU40,125 {subnet} -oG -"
-    grep_command = "grep 'Status: Up'"
-    awk_command = r"awk '{print \"{'name': '\"$2\"', 'ip': '\"$2\"', 'mac': '\"system(\"arp -e | grep \"$2\" | awk '{print $3}'\")\"'},\"}'"
+        # Use regular expressions to extract relevant information
+        pattern = re.compile(r'Nmap scan report for (.+?) \((\d+\.\d+\.\d+\.\d+)\).*?MAC Address: ([\da-fA-F:]+)', re.DOTALL)
+        matches = pattern.findall(content)
 
-    full_command = f"{nmap_command} | {grep_command} | {awk_command} > {output_file}"
+        # Write formatted information to the output file
+        with open(output_file, 'w') as out_file:
+            for match in matches:
+                name, ip, mac = match
+                formatted_output = f'{{"name": "{name}", "ip": "{ip}", "mac": "{mac}"}},'
+                out_file.write(formatted_output + '\n')
 
-    result = subprocess.run(full_command, shell=True, capture_output=True, text=True, check=True)
-    
-    print(f"Scan results have been written to {output_file}")
-except subprocess.CalledProcessError as e:
-    print(f"Error running nmap: {e}")
+        print(f"Processed scan results have been written to {output_file}")
+    except Exception as e:
+        print(f"Error processing Nmap output: {e}")
+
+# Specify the subnet and file paths
+subnet = '10.42.0.0/24'
+nmap_output_file = 'devicescan.txt'
+formatted_output_file = 'devices_formatted.txt'
+
+# Run the sudo nmap command
+run_nmap(subnet, nmap_output_file)
+
+# Process Nmap output
+process_nmap_output(nmap_output_file, formatted_output_file)
