@@ -6,6 +6,7 @@ from tkinter import messagebox
 import os
 import subprocess
 from subprocess import call
+import ast
 
 #The main application class is defined (App).
 #The class constructor (__init__) sets up the main window and configures its properties.
@@ -225,7 +226,7 @@ class App:
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
 
-        import ast
+
 
         # Open devices_formatted.txt and read each line
         with open('devices_formatted.txt', 'r') as f:
@@ -242,11 +243,13 @@ class App:
         # Now devices_list contains the information from devices_formatted.txt
         print(device_list)
         
+        # Define the minimum width for each square
+        min_square_width = 200
        
         # Define a function to calculate the number of columns based on window width
-        def calculate_num_columns(window_width, max_canvas_width):
+        def calculate_num_columns(root_width, max_canvas_width):
             min_column_width = max_canvas_width + 20  # Minimum width for a column (canvas width + padding)
-            return max(1, window_width // min_column_width)
+            return max(1, root_width // min_column_width)
         
        # Define a function to calculate the maximum canvas dimensions
         def calculate_max_canvas_dimensions(device_list):
@@ -264,7 +267,7 @@ class App:
         max_canvas_width, max_canvas_height = calculate_max_canvas_dimensions(device_list)
 
         # Update the number of columns based on the window width
-        num_columns = calculate_num_columns(window.winfo_width(), max_canvas_width)
+        num_columns = calculate_num_columns(root.winfo_width(), max_canvas_width)
         
         # Function to update the layout when the window is resized
         def update_layout(event):
@@ -303,7 +306,7 @@ class App:
             canvas.create_text(x1 + padding, (y1 + y2) / 2, anchor="w", text=text, fill="white")
 
         # Bind the window resize event to the update_layout function
-        window.bind("<Configure>", update_layout)
+        root.bind("<Configure>", update_layout)
         
         # Initial layout
         redraw_canvas()
