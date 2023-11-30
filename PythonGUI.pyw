@@ -243,8 +243,10 @@ class App:
         print(device_list)
         
        
-        # Calculate the number of columns for the grid
-        num_columns = 3  # You can adjust this based on your layout
+        # Define a function to calculate the number of columns based on window width
+        def calculate_num_columns(window_width, max_canvas_width):
+            min_column_width = max_canvas_width + 20  # Minimum width for a column (canvas width + padding)
+            return max(1, window_width // min_column_width)
         
        # Define a function to calculate the maximum canvas dimensions
         def calculate_max_canvas_dimensions(device_list):
@@ -256,10 +258,29 @@ class App:
                 height = 30 * len(text.split('\n'))
                 max_width = max(max_width, width)
                 max_height = max(max_height, height)
-            return max_width, max_height
+            return max_width, max_height + 10
         
         # Calculate the maximum canvas dimensions
         max_canvas_width, max_canvas_height = calculate_max_canvas_dimensions(device_list)
+
+        # Update the number of columns based on the window width
+        num_columns = calculate_num_columns(window.winfo_width(), max_canvas_width)
+        
+        # Function to update the layout when the window is resized
+        def update_layout(event):
+            nonlocal num_columns
+        
+            # Update the number of columns based on the new window width
+            num_columns = calculate_num_columns(event.width, max_canvas_width)
+        
+            # Redraw the canvas widgets with the updated layout
+            redraw_canvas()
+        
+        # Function to redraw the canvas widgets with the current layout
+        def redraw_canvas():
+            # Clear existing widgets
+            for widget in rectangles_frame.winfo_children():
+                widget.destroy()
         
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
@@ -268,7 +289,7 @@ class App:
             canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
         
             # Define the padding
-            padding = 5
+            padding = 2
         
             # Define the coordinates for the top-left and bottom-right corners of the rectangle
             x1, y1 = padding, padding
@@ -280,6 +301,12 @@ class App:
             # Display the information of the device
             text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
             canvas.create_text(x1 + padding, (y1 + y2) / 2, anchor="w", text=text, fill="white")
+
+        # Bind the window resize event to the update_layout function
+        window.bind("<Configure>", update_layout)
+        
+        # Initial layout
+        redraw_canvas()
 
         return frame
 
