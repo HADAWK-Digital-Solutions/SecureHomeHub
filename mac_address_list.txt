@@ -1,0 +1,17 @@
+48:02:2A:47:AD:4D (B-link Electronic Limited)
+IP Camera
+ 
+50:02:91:57:0A:DA (Espressif) 
+Tuya Bulb 2
+ 
+50:02:91:B0:1D:3E (Espressif)
+Tuya Bulb 1
+ 
+A0:92:08:70:1C:39 (Unknown)
+Tuya Plug
+ 
+00:55:DA:52:62:FE (Ieee Registration Authority)
+Nanoleaf controller
+ 
+78:8C:B5:94:BE:BC (Unknown)
+Kasa smart plug
