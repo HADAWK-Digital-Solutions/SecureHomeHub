@@ -246,7 +246,7 @@ class App:
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
-        # Define a function to calculate the maximum canvas dimensions
+       # Define a function to calculate the maximum canvas dimensions
         def calculate_max_canvas_dimensions(device_list):
             max_width, max_height = 0, 0
             for device in device_list:
@@ -279,7 +279,7 @@ class App:
         
             # Display the information of the device
             text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-            canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
+            canvas.create_text(x1 + padding, (y1 + y2) / 2, anchor="w", text=text, fill="white")
 
         return frame
 
