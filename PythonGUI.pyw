@@ -242,35 +242,37 @@ class App:
         # Now devices_list contains the information from devices_formatted.txt
         print(device_list)
         
+       
         # Calculate the number of columns for the grid
         num_columns = 3  # You can adjust this based on your layout
         
-        # Define a function to calculate the required canvas dimensions
-        def calculate_canvas_dimensions(device):
-            text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-            text_length = max(len(line) for line in text.split('\n'))
-            width = 15 * text_length  # Adjust the multiplier based on your preference
-            height = 30 * len(text.split('\n'))  # Adjust the multiplier based on your preference
-            return width, height
+        # Define a function to calculate the maximum canvas dimensions
+        def calculate_max_canvas_dimensions(device_list):
+            max_width, max_height = 0, 0
+            for device in device_list:
+                text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
+                text_length = max(len(line) for line in text.split('\n'))
+                width = 15 * text_length
+                height = 30 * len(text.split('\n'))
+                max_width = max(max_width, width)
+                max_height = max(max_height, height)
+            return max_width, max_height
+        
+        # Calculate the maximum canvas dimensions
+        max_canvas_width, max_canvas_height = calculate_max_canvas_dimensions(device_list)
         
         # Iterate over the device list and create a square for each device
         for i, device in enumerate(device_list):
             # Create a Canvas widget for each square
-            canvas = tk.Canvas(rectangles_frame, bg="white", width=1, height=1)  # Start with a small size
+            canvas = tk.Canvas(rectangles_frame, bg="white", width=max_canvas_width, height=max_canvas_height)
             canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
-        
-            # Calculate the required canvas dimensions
-            canvas_width, canvas_height = calculate_canvas_dimensions(device)
-        
-            # Configure the canvas with the calculated dimensions
-            canvas.config(width=canvas_width, height=canvas_height)
         
             # Define the padding
             padding = 5
         
             # Define the coordinates for the top-left and bottom-right corners of the rectangle
             x1, y1 = padding, padding
-            x2, y2 = canvas_width - padding, canvas_height - padding
+            x2, y2 = max_canvas_width - padding, max_canvas_height - padding
         
             # Create a rectangle on the canvas
             canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
@@ -279,8 +281,6 @@ class App:
             text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
             canvas.create_text((x1 + x2) / 2, (y1 + y2) / 2, text=text, fill="white")
 
-
-        
         return frame
 
     #Create Scans page 
