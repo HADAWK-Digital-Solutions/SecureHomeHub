@@ -198,7 +198,8 @@ class App:
 
 
     
-    # Create Devices Page with Vertical Scrollbar
+
+    # Create Devices Page
     def create_devices_page(self):
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -220,9 +221,9 @@ class App:
         button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
         button.grid(row=1, column=8)
     
-        # Create a canvas to hold the blue rectangles
-        canvas = tk.Canvas(frame, bg="white")
-        canvas.pack(fill=tk.BOTH, expand=True)
+        # Create a frame to hold the blue rectangles
+        rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
+        rectangles_frame.pack(fill=tk.BOTH, expand=True)
     
         # Open devices_formatted.txt and read each line
         with open('devices_formatted.txt', 'r') as f:
@@ -273,32 +274,28 @@ class App:
         # Function to redraw the canvas widgets with the current layout
         def redraw_canvas():
             # Clear existing widgets
-            canvas.delete("all")
+            for widget in rectangles_frame.winfo_children():
+                widget.destroy()
     
             # Iterate over the device list and create a square for each device
             for i, device in enumerate(device_list):
-                # Calculate the position of the canvas
-                row = i // num_columns
-                col = i % num_columns
+                # Create a Canvas widget for each square
+                canvas = tk.Canvas(rectangles_frame, bg="white", width=max_canvas_width, height=max_canvas_height)
+                canvas.grid(row=i // num_columns, column=i % num_columns, padx=10, pady=10, sticky="nsew")
     
                 # Define the padding
                 padding = 2
     
                 # Define the coordinates for the top-left and bottom-right corners of the rectangle
-                x1 = col * max_canvas_width + padding
-                y1 = row * max_canvas_height + padding
-                x2 = x1 + max_canvas_width - 2 * padding
-                y2 = y1 + max_canvas_height - 2 * padding
+                x1, y1 = padding, padding
+                x2, y2 = max_canvas_width - padding, max_canvas_height - padding
     
                 # Create a rectangle on the canvas
                 canvas.create_rectangle(x1, y1, x2, y2, fill="blue")
     
                 # Display the information of the device
                 text = f"IP: {device['IP']}\nMAC: {device['MAC']}\nStatus: {device['Status']}"
-                text_id = canvas.create_text(x1 + padding, (y1 + y2) / 2, anchor="w", text=text, fill="white")
-    
-                # Bind the canvas text item to the canvas scrolling function
-                canvas.tag_bind(text_id, "<Enter>", lambda event, text_id=text_id: self.on_text_hover(event, canvas, text_id))
+                canvas.create_text(x1 + padding, (y1 + y2) / 2, anchor="w", text=text, fill="white")
     
         # Bind the window resize event to the update_layout function
         frame.bind("<Configure>", update_layout)
@@ -307,11 +304,7 @@ class App:
         redraw_canvas()
     
         return frame
-    
-    # Function to handle text hover event for canvas scrolling
-    def on_text_hover(self, event, canvas, text_id):
-        bbox = canvas.bbox(text_id)
-        canvas.yview_moveto(bbox[1] / canvas.winfo_height())
+
 
 
     #Create Scans page 
