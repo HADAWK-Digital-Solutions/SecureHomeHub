@@ -7,6 +7,7 @@ import os
 import subprocess
 from subprocess import call
 import ast
+import webbrowser
 
 #The main application class is defined (App).
 #The class constructor (__init__) sets up the main window and configures its properties.
@@ -90,7 +91,8 @@ class App:
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text=f"Intrusion Detection", command=lambda: call(['python', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=4, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Alerts.html"))
         button.grid(row=1, column=8)
         return frame
     
@@ -110,8 +112,9 @@ class App:
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text=f"Super User Privileges")
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
-        button.grid(row=1, column=5)
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Users.html"))
+        button.grid(row=1, column=8)
                 # Create a frame to hold the blue rectangles
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
         rectangles_frame.pack(fill=tk.BOTH, expand=True)
@@ -218,8 +221,10 @@ class App:
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text=f"Display Ports", command=lambda: call(['python3', '-i', 'display_ports.py']))
         button.grid(row=0, column=4, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Devices.html"))
         button.grid(row=1, column=8)
+)
     
         # Create a frame to hold the blue rectangles
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
@@ -305,6 +310,17 @@ class App:
     
         return frame
 
+    def open_help_page(self, html_file_name):
+        try:
+            # Assuming that the HTML files are in the same directory as the script
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+            html_file_path = os.path.join(script_dir, html_file_name)
+
+            # Open the specified HTML file in the default web browser using the webbrowser module
+            webbrowser.open(html_file_path, new=2)
+        except Exception as e:
+            # Handle any errors or exceptions here
+            print(f"Error: {e}")
 
 
     #Create Scans page 
@@ -336,9 +352,9 @@ class App:
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text=f"Scan Script", command=lambda: call(['python', '-i', 'scan2.1py']))
         button.grid(row=0, column=4, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Scans.html"))
         button.grid(row=1, column=8)
-        
         return frame
     
     def toggle_kill_switch(self):
@@ -353,6 +369,7 @@ class App:
         # Execute the command
         subprocess.run(command.split())
 
+    #Create Network Page
     def create_network_page(self):
         frame = ttk.Frame(self.root)
         style = ttk.Style()
@@ -380,9 +397,9 @@ class App:
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text="Snort", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=4, padx=10)
-        button = tk.Button(sub_frame, text="Help", command=lambda: os.system('start " " readme.txt'))
-        button.grid(row=1, column=7)
-
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Network.html"))
+        button.grid(row=1, column=8)
         return frame
     
     #Create power options page
@@ -402,8 +419,8 @@ class App:
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text="Restart", command=self.restart_device)
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text=f"Help", command=lambda: os.system('start " " readme.txt'))
-        button.grid(row=1, column=5)
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Power.html"))
+        button.grid(row=1, column=8)
         return frame
     
     def show_page(self, index):
