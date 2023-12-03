@@ -224,7 +224,6 @@ class App:
         # Add the Help button for opening the specified HTML file
         button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Devices.html"))
         button.grid(row=1, column=8)
-)
     
         # Create a frame to hold the blue rectangles
         rectangles_frame = ttk.Frame(frame, style="DarkGray.TFrame")
