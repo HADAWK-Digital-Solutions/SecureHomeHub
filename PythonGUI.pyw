@@ -309,17 +309,17 @@ class App:
     
         return frame
 
-    def open_help_page(self, html_file_name):
-        try:
-            # Assuming that the HTML files are in the same directory as the script
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            html_file_path = os.path.join(script_dir, html_file_name)
+def open_help_page(self, html_file_name):
+    try:
+        # Assuming that the HTML files are in the same directory as the script
+        relative_path = os.path.join(os.path.dirname(__file__), html_file_name)
 
-            # Open the specified HTML file in the default web browser using the webbrowser module
-            webbrowser.open(html_file_path, new=2)
-        except Exception as e:
-            # Handle any errors or exceptions here
-            print(f"Error: {e}")
+        # Open the specified HTML file in the default web browser using the webbrowser module
+        webbrowser.open(relative_path, new=2)
+    except Exception as e:
+        # Handle any errors or exceptions here
+        print(f"Error: {e}")
+
 
 
     #Create Scans page 
