@@ -11,6 +11,7 @@ class NetworkScanner:
         self.subnet = subnet
         self.port_scans = defaultdict(int)
         self.threshold_ports = threshold_ports
+        self.threats_detected = False
 
     def run_nmap_scan(self):
         try:
@@ -30,6 +31,7 @@ class NetworkScanner:
     def analyze_scans(self):
         for host, ports_scanned in self.port_scans.items():
             if ports_scanned > self.threshold_ports:
+                self.threats_detected = True
                 alert_msg = f"[!] Potential port scan detected from {host}"
                 print(alert_msg)
                 logging.info(alert_msg)
@@ -37,6 +39,8 @@ class NetworkScanner:
     def display_results(self):
         for host, ports in self.port_scans.items():
             print(f"Host: {host}, Ports Scanned: {ports}")
+        if not self.threats_detected:
+            print("No potential threats were found during the scan.")
 
 def main():
     subnet = "10.42.0.0/24"  # Define your subnet
