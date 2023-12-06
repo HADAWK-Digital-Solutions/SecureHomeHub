@@ -15,7 +15,7 @@ def compare_files(self):
             original_content = file.read()
 
     # Run the IoT_devices.py script
-    subprocess.run(['python3', iot_devices_script_path])
+    subprocess.run(['python3', IoT_devices.py])
 
     # Read the updated content
     updated_content = ""
