@@ -1,0 +1,49 @@
+Chain INPUT (policy DROP)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+           tcp  --  anywhere             anywhere             tcp dpt:ssh ctstate NEW recent: SET name: SSH side: source mask: 255.255.255.255
+DROP       tcp  --  anywhere             anywhere             tcp dpt:ssh ctstate NEW recent: UPDATE seconds: 60 hit_count: 4 name: SSH side: source mask: 255.255.255.255
+           tcp  --  anywhere             anywhere             tcp dpt:ms-wbt-server ctstate NEW recent: SET name: RDP side: source mask: 255.255.255.255
+DROP       tcp  --  anywhere             anywhere             tcp dpt:ms-wbt-server ctstate NEW recent: UPDATE seconds: 60 hit_count: 4 name: RDP side: source mask: 255.255.255.255
+ACCEPT     icmp --  anywhere             anywhere             icmp echo-request limit: avg 1/sec burst 5
+LOG        all  --  anywhere             anywhere             limit: avg 5/min burst 5 LOG level debug prefix "Dropped: "
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination         
+DOCKER-USER  all  --  anywhere             anywhere            
+DOCKER-ISOLATION-STAGE-1  all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+DOCKER     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             MAC00:55:da:52:62:fe
+ACCEPT     all  --  anywhere             anywhere             MAC50:02:91:b0:1d:3e
+ACCEPT     all  --  anywhere             anywhere             MACa0:92:08:70:1c:39
+ACCEPT     all  --  anywhere             anywhere             MAC48:02:2a:47:ad:4d
+ACCEPT     all  --  anywhere             anywhere             MAC50:02:91:57:0a:da
+ACCEPT     all  --  anywhere             anywhere             MAC78:8c:b5:94:be:bc
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+
+Chain DOCKER (1 references)
+target     prot opt source               destination         
+
+Chain DOCKER-ISOLATION-STAGE-1 (1 references)
+target     prot opt source               destination         
+DOCKER-ISOLATION-STAGE-2  all  --  anywhere             anywhere            
+RETURN     all  --  anywhere             anywhere            
+
+Chain DOCKER-ISOLATION-STAGE-2 (1 references)
+target     prot opt source               destination         
+DROP       all  --  anywhere             anywhere            
+RETURN     all  --  anywhere             anywhere            
+
+Chain DOCKER-USER (1 references)
+target     prot opt source               destination         
+RETURN     all  --  anywhere             anywhere            
