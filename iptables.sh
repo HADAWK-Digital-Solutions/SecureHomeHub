@@ -7,6 +7,9 @@
 #    iptables -A FORWARD -i wlan0 -o eth0 -p tcp --dport "$service_port" -j ACCEPT
 }
 
+iptables -A INPUT -p tcp -s 174.0.243.38 --dport 49646 -j ACCEPT
+iptables -A INPUT -p tcp -s 174.0.243.38 --dport 49648 -j ACCEPT
+
 # Flush existing rules and set default policies
 iptables -F
 iptables -P INPUT DROP
