@@ -1,10 +1,17 @@
 #!/bin/bash
 
+# Function to add rules for specific services
+add_service_rule() {
+    local service_port="$1"
+    iptables -A INPUT -i wlan0 -p tcp --dport "$service_port" -j ACCEPT
+    iptables -A FORWARD -i wlan0 -o eth0 -p tcp --dport "$service_port" -j ACCEPT
+}
+
 # Flush existing rules and set default policies
 iptables -F
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
-iptables -P OUTPUT DROP
+iptables -P OUTPUT ACCEPT
 
 # Loopback interface is allowed
 iptables -A INPUT -i lo -j ACCEPT
@@ -40,6 +47,10 @@ iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW -m recent --updat
 # DDoS Protection (Example: Rate limiting)
 # Limit incoming ICMP packets (adjust rates as needed)
 iptables -A INPUT -p icmp --icmp-type echo-request -m limit --limit 1/s -j ACCEPT
+
+# Add service-specific rules here:
+# Example: Allow MQTT traffic on port 1883
+add_service_rule 1883
 
 # Log dropped packets to a log file
 iptables -A INPUT -j LOG --log-prefix "Dropped: " --log-level 7 -m limit --limit 5/m
