@@ -389,6 +389,10 @@ class App:
         intrusion_button = tk.Button(sub_frame, text="Start Intrusion Detection", command=self.start_intrusion_detection)
         intrusion_button.grid(row=0, column=5, padx=10)
 
+        # Button for scanning and tagging trusted devices
+        trusted_devices_button = tk.Button(sub_frame, text="Scan and Tag Trusted Devices", command=self.scan_and_tag_trusted_devices)
+        trusted_devices_button.grid(row=0, column=6, padx=10)
+
 
         # Create the kill switch button
         kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
@@ -423,6 +427,25 @@ class App:
         threading.Thread(target=run_ids, daemon=True).start()
 
     # Main execution
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
+
+     def scan_and_tag_trusted_devices(self):
+        def run_scan():
+            devices = scan_network()
+            if not devices:
+                messagebox.showinfo("Scan Result", "No devices found.")
+                return
+            trusted_devices = tag_trusted_devices(devices)
+            save_trusted_devices(trusted_devices)
+            messagebox.showinfo("Scan Result", "Trusted devices saved.")
+
+        # Run the scanning in a separate thread
+        threading.Thread(target=run_scan, daemon=True).start()
+
+# Main execution
 if __name__ == "__main__":
     root = tk.Tk()
     app = App(root)
