@@ -385,6 +385,11 @@ class App:
         # Create a StringVar to track the state of the kill switch
         self.kill_switch_state = tk.StringVar(value="down")
 
+        # Create the intrusion detection button:
+        intrusion_button = tk.Button(sub_frame, text="Start Intrusion Detection", command=self.start_intrusion_detection)
+        intrusion_button.grid(row=0, column=5, padx=10)
+
+
         # Create the kill switch button
         kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
         kill_switch_button.grid(row=0, column=0, padx=10)
@@ -402,6 +407,27 @@ class App:
         button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Network.html"))
         button.grid(row=1, column=8)
         return frame
+
+    #IDS Script
+    def start_intrusion_detection(self):
+        def run_ids():
+            ids = ImprovedIDS()
+            print("Starting intrusion detection...")
+            try:
+                sniff(prn=ids.analyze_packet, store=0, filter="net 10.42.0.0/24")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                logging.error(f"An error occurred: {e}")
+
+        # Run the intrusion detection in a separate thread
+        threading.Thread(target=run_ids, daemon=True).start()
+
+    # Main execution
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = App(root)
+    root.mainloop()
+
     
     #Create power options page
     def create_power_page(self) :
