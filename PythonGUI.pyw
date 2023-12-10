@@ -213,7 +213,7 @@ class App:
         label.pack(pady=20)
         sub_frame = ttk.Frame(frame)
         sub_frame.pack(pady=20)
-        button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['sudo', 'python3', '-i', 'topology_iot.py']))
+        button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['sudo', 'python3', '-i', 'topology_nmap1.py']))
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text=f"Connect Devices", command=self.compare_files)
         button.grid(row=0, column=2, padx=10)
@@ -388,11 +388,11 @@ class App:
         kill_switch_button.grid(row=0, column=0, padx=10)
 
         # Other buttons
-        button = tk.Button(sub_frame, text="Connected Devices")
+        button = tk.Button(sub_frame, text="Scan for Network Intrusion", command=lambda: call(['python3', '-i', '']))
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text="Internet Connection")
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text="Connectivity Test")
+        button = tk.Button(sub_frame, text="", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text="Snort", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=4, padx=10)
