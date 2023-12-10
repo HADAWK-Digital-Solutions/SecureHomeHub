@@ -11,23 +11,22 @@ def run_nmap(subnet, output_file):
 def process_nmap_output(input_file, output_file):
     try:
         devices_list = []
+        device_info = {}
 
         with open(input_file, "r") as f:
             lines = f.readlines()
 
-        device_info = {}
         for line in lines:
             if "Nmap scan report for" in line:
-                if device_info:
-                    devices_list.append(device_info)
                 device_info = {"IP": line.split()[-1]}
-            elif "MAC Address:" in line:
+            elif "Host is up" in line:
+                device_info["Status"] = "Up"
+            elif "MAC Address:" in line and device_info.get("Status") == "Up":
                 mac_info = line.split(" ", 3)
                 device_info["MAC"] = mac_info[2]
                 device_info["Device Name"] = mac_info[3].strip("()\n")
-
-        if device_info:
-            devices_list.append(device_info)
+                devices_list.append(device_info)
+                device_info = {}
 
         with open(output_file, "w") as f:
             for device in devices_list:
@@ -59,3 +58,4 @@ process_nmap_output(nmap_output_file, formatted_output_file)
 
 # Display formatted output
 display_output(formatted_output_file)
+
