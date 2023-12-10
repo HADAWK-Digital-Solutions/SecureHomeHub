@@ -385,18 +385,19 @@ class App:
         # Create a StringVar to track the state of the kill switch
         self.kill_switch_state = tk.StringVar(value="down")
 
-        # Create the intrusion detection button:
-        intrusion_button = tk.Button(sub_frame, text="Start Intrusion Detection", command=self.start_intrusion_detection)
-        intrusion_button.grid(row=0, column=5, padx=10)
-
-        # Button for scanning and tagging trusted devices
-        trusted_devices_button = tk.Button(sub_frame, text="Scan and Tag Trusted Devices", command=self.scan_and_tag_trusted_devices)
-        trusted_devices_button.grid(row=0, column=6, padx=10)
-
-
-        # Create the kill switch button
-        kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
-        kill_switch_button.grid(row=0, column=0, padx=10)
+        # Add buttons
+        button = tk.Button(sub_frame, text=f"Topolgy")
+        button.grid(row=0, column=1, padx=10)
+        button = tk.Button(sub_frame, text=f"Scan after Alerts")
+        button.grid(row=0, column=2, padx=10)
+        button = tk.Button(sub_frame, text=f"Quick Enable Nightly Scans")
+        button.grid(row=0, column=3, padx=10)
+        button = tk.Button(sub_frame, text=f"Topology2", command=lambda: call(['python', '-i', 'IoT_devices.py']))
+        button.grid(row=0, column=4, padx=10)
+        # Add the Help button for opening the specified HTML file
+        button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Scans.html"))
+        button.grid(row=1, column=8)
+        return frame
 
         # Other buttons
         button = tk.Button(sub_frame, text="Connected Devices")
@@ -411,45 +412,6 @@ class App:
         button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Network.html"))
         button.grid(row=1, column=8)
         return frame
-
-    #IDS Script
-    def start_intrusion_detection(self):
-        def run_ids():
-            ids = ImprovedIDS()
-            print("Starting intrusion detection...")
-            try:
-                sniff(prn=ids.analyze_packet, store=0, filter="net 10.42.0.0/24")
-            except Exception as e:
-                print(f"An error occurred: {e}")
-                logging.error(f"An error occurred: {e}")
-
-        # Run the intrusion detection in a separate thread
-        threading.Thread(target=run_ids, daemon=True).start()
-
-    # Main execution
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()
-
-     def scan_and_tag_trusted_devices(self):
-        def run_scan():
-            devices = scan_network()
-            if not devices:
-                messagebox.showinfo("Scan Result", "No devices found.")
-                return
-            trusted_devices = tag_trusted_devices(devices)
-            save_trusted_devices(trusted_devices)
-            messagebox.showinfo("Scan Result", "Trusted devices saved.")
-
-        # Run the scanning in a separate thread
-        threading.Thread(target=run_scan, daemon=True).start()
-
-# Main execution
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = App(root)
-    root.mainloop()
 
     
     #Create power options page
