@@ -1,51 +1,61 @@
 import subprocess
-import re
 
-def scan_network(subnet):
+def run_nmap(subnet, output_file):
     try:
-        result = subprocess.check_output(['nmap', '-sn', '-sL', subnet])
-        result = result.decode('utf-8')
-        return parse_nmap_output(result)
+        # Run the sudo nmap command and redirect the output to the specified file
+        subprocess.run(['sudo', 'nmap', '-v', '-sn', subnet, '-oN', output_file], check=True)
+        print(f"Nmap scan results have been written to {output_file}")
     except subprocess.CalledProcessError as e:
-        print(f"Error during scan: {e}")
-        return []
-    except FileNotFoundError:
-        print("nmap not found. Please install nmap.")
-        return []
+        print(f"Error running nmap: {e}")
 
-def parse_nmap_output(output):
-    ip_regex = r'Nmap scan report for ([\w.-]+) \(([\d\.]+)\)'
-    mac_regex = r'MAC Address: ([\w:]+) \(([^)]+)\)'
-    devices = []
-    current_device = {}
+def process_nmap_output(input_file, output_file):
+    try:
+        devices_list = []
 
-    for line in output.split('\n'):
-        ip_match = re.search(ip_regex, line)
-        mac_match = re.search(mac_regex, line)
+        with open(input_file, "r") as f:
+            lines = f.readlines()
 
-        if ip_match:
-            current_device = {'name': ip_match.group(1), 'ip': ip_match.group(2)}
-        elif mac_match and 'ip' in current_device:
-            current_device['mac'] = mac_match.group(1)
-            current_device['vendor'] = mac_match.group(2)
-            devices.append(current_device)
-            current_device = {}
+        device_info = {}
+        for line in lines:
+            if "Nmap scan report for" in line:
+                if device_info:
+                    devices_list.append(device_info)
+                device_info = {"IP": line.split()[-1]}
+            elif "MAC Address:" in line:
+                mac_info = line.split(" ", 3)
+                device_info["MAC"] = mac_info[2]
+                device_info["Device Name"] = mac_info[3].strip("()\n")
 
-    return devices
+        if device_info:
+            devices_list.append(device_info)
 
-def save_devices_to_file(devices, filename):
-    with open(filename, 'w') as file:
-        for device in devices:
-            file.write(f"Name: {device.get('name', 'N/A')}, IP: {device.get('ip', 'N/A')}, MAC: {device.get('mac', 'N/A')}, Vendor: {device.get('vendor', 'N/A')}\n")
+        with open(output_file, "w") as f:
+            for device in devices_list:
+                f.write(f"Device Name: {device.get('Device Name', 'N/A')}\n")
+                f.write(f"MAC Address: {device.get('MAC', 'N/A')}\n")
+                f.write(f"IP Address: {device['IP']}\n")
+                f.write("\n")
 
-def main():
-    subnet = "10.42.0.0/24"  # Change to your target subnet
-    devices = scan_network(subnet)
-    if devices:
-        save_devices_to_file(devices, 'connected_devices.txt')
-        print("Connected devices saved to connected_devices.txt")
-    else:
-        print("No devices found.")
+    except Exception as e:
+        print(f"Error processing Nmap output: {e}")
 
-if __name__ == "__main__":
-    main()
+def display_output(file_path):
+    try:
+        with open(file_path, "r") as file:
+            print(file.read())
+    except Exception as e:
+        print(f"Error reading file {file_path}: {e}")
+
+# Specify the subnet and file paths
+subnet = '10.42.0.0/24'
+nmap_output_file = 'devicescan.txt'
+formatted_output_file = 'devices_formatted.txt'
+
+# Run the sudo nmap command
+run_nmap(subnet, nmap_output_file)
+
+# Process Nmap output
+process_nmap_output(nmap_output_file, formatted_output_file)
+
+# Display formatted output
+display_output(formatted_output_file)
