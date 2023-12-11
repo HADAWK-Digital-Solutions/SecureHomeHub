@@ -6,6 +6,14 @@ def generate_ips(subnet):
     network = ipaddress.ip_network(subnet)
     return [str(ip) for ip in network.hosts()]
 
+# Function to quickly check if IP is up
+def is_ip_up(ip):
+    try:
+        subprocess.check_output(["ping", "-c", "1", "-W", "1", ip], universal_newlines=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+
 # Function to ping IP and return latency
 def ping_ip(ip):
     try:
@@ -21,14 +29,15 @@ def ping_ip(ip):
 def main():
     ips = generate_ips('10.42.0.0/24')
     for ip in ips:
-        latency = ping_ip(ip)
-        if latency is not None:
-            if latency < 20:
-                print(f"IP: {ip} meets the standard with latency: {latency}ms")
-            else:
-                print(f"IP: {ip} does not meet the standard with latency: {latency}ms")
+        if is_ip_up(ip):
+            latency = ping_ip(ip)
+            if latency is not None:
+                if latency < 20:
+                    print(f"IP: {ip} is up and meets the standard with latency: {latency}ms")
+                else:
+                    print(f"IP: {ip} is up but does not meet the standard with latency: {latency}ms")
         else:
-            print(f"IP: {ip} could not be pinged or is unreachable.")
+            print(f"IP: {ip} is down or not responding.")
 
 if __name__ == "__main__":
     main()
