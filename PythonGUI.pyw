@@ -213,10 +213,11 @@ class App:
         label.pack(pady=20)
         sub_frame = ttk.Frame(frame)
         sub_frame.pack(pady=20)
-
+        button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['sudo', 'python3', '-i', 'topology_nmap1.py']))
+        button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text=f"Connect Devices", command=self.compare_files)
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text=f"Tag Trusted Devices", command=lambda: call(['python3', '-i', 'trusted_nmap.py']))
+        button = tk.Button(sub_frame, text=f"Scan for Intrusion on Devices", command=lambda: call(['python3', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text=f"Display Ports", command=lambda: call(['python3', '-i', 'display_ports.py']))
         button.grid(row=0, column=4, padx=10)
@@ -382,18 +383,16 @@ class App:
         # Create a StringVar to track the state of the kill switch
         self.kill_switch_state = tk.StringVar(value="down")
 
-        # Create the kill switch button
+        
         kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
         kill_switch_button.grid(row=0, column=0, padx=10)
-
-        # Other buttons
         button = tk.Button(sub_frame, text="Scan for Network Intrusion", command=lambda: call(['python3', '-i', '']))
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text="Internet Connection")
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text=f"Topology", command=lambda: call(['sudo', 'python3', '-i', 'topology_nmap1.py']))
-        button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text="intrusion Detection System", command=lambda: call(['python', '-i', 'Intrusion_block.py']))
+        button = tk.Button(sub_frame, text="", command=lambda: call(['python', '-i', 'snort.py']))
+        button.grid(row=0, column=3, padx=10)
+        button = tk.Button(sub_frame, text="Snort", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=4, padx=10)
         # Add the Help button for opening the specified HTML file
         button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Network.html"))
