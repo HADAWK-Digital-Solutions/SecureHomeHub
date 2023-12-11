@@ -47,8 +47,8 @@ def display_output(file_path):
 
 # Specify the subnet and file paths
 subnet = '10.42.0.0/24'
-nmap_output_file = 'devicescan.txt'
-formatted_output_file = 'devices_formatted.txt'
+nmap_output_file = 'list_of_devices.txt'
+formatted_output_file = 'list_of_devices.txt'
 
 # Run the sudo nmap command
 run_nmap(subnet, nmap_output_file)
