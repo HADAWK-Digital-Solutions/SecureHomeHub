@@ -483,6 +483,9 @@ class App:
         self.current_page.grid(row=1, column=0, columnspan=len(self.buttons), sticky="nsew")
 
 if __name__ == "__main__":
+    #Run the IoT_devices.py script
+    subprocess.run(['python3', 'IoT_devices.py'])
+
     root = tk.Tk()
     app = App(root)
     root.mainloop()
