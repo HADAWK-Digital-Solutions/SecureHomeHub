@@ -386,13 +386,13 @@ class App:
         
         kill_switch_button = tk.Button(sub_frame, text="Emergency Kill Switch", command=self.toggle_kill_switch)
         kill_switch_button.grid(row=0, column=0, padx=10)
-        button = tk.Button(sub_frame, text="Scan for Network Intrusion", command=lambda: call(['python3', '-i', '']))
+        button = tk.Button(sub_frame, text="Scan for Network Intrusion", command=lambda: call(['python3', '-i', 'intrusion_detect_v2.py']))
         button.grid(row=0, column=1, padx=10)
-        button = tk.Button(sub_frame, text="Internet Connection")
+        button = tk.Button(sub_frame, text="Internet Connection Check")
         button.grid(row=0, column=2, padx=10)
         button = tk.Button(sub_frame, text="", command=lambda: call(['python', '-i', 'snort.py']))
         button.grid(row=0, column=3, padx=10)
-        button = tk.Button(sub_frame, text="Snort", command=lambda: call(['python', '-i', 'snort.py']))
+        button = tk.Button(sub_frame, text="Check for Malicious Files", command=lambda: call(['python', '-i', 'check_malicious_files_network.py']))
         button.grid(row=0, column=4, padx=10)
         # Add the Help button for opening the specified HTML file
         button = tk.Button(sub_frame, text=f"Help", command=lambda: self.open_help_page("Network.html"))
