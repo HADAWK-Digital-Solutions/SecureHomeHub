@@ -1,11 +1,10 @@
 import subprocess
-import re
+import ipaddress
 
-# Function to get IP addresses from ARP table
-def get_ip_addresses():
-    arp_output = subprocess.check_output(["arp", "-a"], universal_newlines=True)
-    ip_addresses = re.findall(r"\((.*?)\)", arp_output)
-    return ip_addresses
+# Function to generate IP addresses in a subnet
+def generate_ips(subnet):
+    network = ipaddress.ip_network(subnet)
+    return [str(ip) for ip in network.hosts()]
 
 # Function to ping IP and return latency
 def ping_ip(ip):
@@ -20,7 +19,7 @@ def ping_ip(ip):
 
 # Main function
 def main():
-    ips = get_ip_addresses()
+    ips = generate_ips('10.42.0.0/24')
     for ip in ips:
         latency = ping_ip(ip)
         if latency is not None:
