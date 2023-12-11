@@ -390,7 +390,7 @@ class App:
         button.grid(row=0, column=1, padx=10)
         button = tk.Button(sub_frame, text="Internet Connection Check")
         button.grid(row=0, column=2, padx=10)
-        button = tk.Button(sub_frame, text="", command=lambda: call(['python', '-i', 'snort.py']))
+        button = tk.Button(sub_frame, text="Display Used Ports", command=lambda: call(['python', '-i', 'display_ports.py']))
         button.grid(row=0, column=3, padx=10)
         button = tk.Button(sub_frame, text="Check for Malicious Files", command=lambda: call(['python', '-i', 'check_malicious_files_network.py']))
         button.grid(row=0, column=4, padx=10)
